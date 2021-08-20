@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "front": "cd client && npm start",
+        "back": "cd server && npm start"
+    }
+}

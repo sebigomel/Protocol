@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config()
 
 const usersRoutes = require('./routes/users')
 
@@ -10,7 +11,7 @@ app.use('/users', usersRoutes);
 
 app.use(cors());
 
-const CONNECTION_URL = 'mongodb+srv://sebigomel:Mikemike04@cluster-class-app.nw0nx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const CONNECTION_URL = process.env.DATABASE_URL;
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(CONNECTION_URL, {useNewUrlParser : true, useUnifiedTopology : true})
