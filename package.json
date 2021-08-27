@@ -2,5 +2,8 @@
     "scripts": {
         "front": "cd client && npm start",
         "back": "cd server && npm start"
+    },
+    "dependencies": {
+        "glob": "^7.1.7"
     }
 }
