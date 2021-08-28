@@ -1,21 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const {connect, set} = require('mongoose');
 const cors = require('cors');
-const glob = require('glob')
-const path = require('path')
-require('dotenv').config()
+const path = require('path');
+const passport = require('passport');
+const { initialize } = require('passport');
+
+require('dotenv').config();
 
 const app = express();
 
-glob.sync("./routes/**/*.js").forEach(function (file) {
-        let modulePath = path.resolve(file)
-        let route = modulePath.split("routes")[1].replace(/\\/g, '/').replace(".js", "").split('/')
-        if ([...route].pop() == "index") route.pop()
-        require(modulePath)(app, route.join('/'));
-});
-
 app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded());
+
+app.use(passport.initialize());
 
 const CONNECTION_URL = process.env.DATABASE_URL;
 const PORT = process.env.PORT || 5000;

@@ -1,9 +1,9 @@
-const express = require('express')
-/**
- * @param {express.Application} app
- */
-module.exports = (app, route) => {
-    app.get(route, async (req, res) => {
-        res.send('hola')
-    });
-}
+const express = require('express');
+
+const router = express.Router();
+
+router.get('/', (req, res) => {
+    res.send("Users works");
+})
+
+export default router;
