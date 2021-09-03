@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const {connect, set} = require('mongoose');
 const cors = require('cors');
 const glob = require('glob')
