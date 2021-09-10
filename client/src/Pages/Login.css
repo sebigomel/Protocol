@@ -4,7 +4,7 @@
 }
 
 .custom-nav {
-    background-color: #adfb6a !important;
+    background-color: #2C7B42 !important;
     color: white;
 }
 
@@ -37,7 +37,7 @@
 
 .footer {
     height:30px;
-    background-color: #adfb6a;
+    background-color: #2C7B42;
     padding: 0 10px;
     display: flex;
     justify-content: end;
@@ -54,6 +54,3 @@
     color: white;
 }
 
-.appbar {
-    background: #2C7B42 !important;
-}
