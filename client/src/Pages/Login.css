@@ -53,3 +53,7 @@
     margin: auto 0;
     color: white;
 }
+
+.appbar {
+    background: #2C7B42 !important;
+}

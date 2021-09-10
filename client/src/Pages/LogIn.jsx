@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    
 }));
 
 export default function LogIn() {
@@ -25,14 +26,13 @@ export default function LogIn() {
     return (
         <div className="login">
 
-            <AppBar position="static">
+            <AppBar color='inherit' className='appbar' position="static">
                 <Toolbar>
                     <img src="/logo512.png" alt="" width="24" height="24" className='nav-icon' />
                     <Typography variant="h6" className={classes.title}>
                         Protocol
-          </Typography>23
+          </Typography>
           {/* kdnfgkjfhgihgirht4 */}
-                    <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
 
