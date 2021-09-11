@@ -1,12 +1,10 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import './Login.css'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { TextField } from "@material-ui/core";
+import { Typography } from '@material-ui/core/'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,37 +16,34 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-    
+
 }));
 
 export default function LogIn() {
     const classes = useStyles();
+
+    const handleSubmit = () => {
+        window.location.pathname = "/"
+    }
+
     return (
         <div className="login">
 
-            <AppBar color='inherit' className='appbar' position="static">
-                <Toolbar>
-                    <img src="/logo512.png" alt="" width="24" height="24" className='nav-icon' />
-                    <Typography variant="h6" className={classes.title}>
-                        Protocol
-          </Typography>
-          {/* kdnfgkjfhgihgirht4 */}
-                </Toolbar>
-            </AppBar>
+            <img src="/LogoProtocol.png" alt="logo" height="76" width="224" className='icon' />
 
             <div className="form">
-                <h3>Iniciar sesion:</h3>
-                <input className='login-input' type='text' placeholder='Nombre de usuario'></input>
-                <input className='login-input' type='password' placeholder='Contraseña'></input>
+                <Typography variant="h5">Iniciar sesion:</Typography>
+                <TextField className='login-input' type='text' label='Nombre de usuario' variant="filled"></TextField>
+                <TextField className='login-input' type='password' label='Contraseña' variant="filled"></TextField>
                 <div className="form-footer">
-                    <Button className='custom-btn' variant='contained' color='primary'>Iniciar sesion</Button>
-                    <a href="#">Olvide mi contraseña</a>
+                    <Button className='custom-btn' variant='contained' color='primary' onClick={handleSubmit}>Iniciar sesion</Button>
+                    <Link href="#">Olvide mi contraseña</Link>
                 </div>
             </div>
 
             <div className="footer">
-                <span>Protocol</span>
+                <img src="/LogoProtocol.png" alt="logo" height="30"/>
             </div>
-        </div>
+        </div>  
     )
 }

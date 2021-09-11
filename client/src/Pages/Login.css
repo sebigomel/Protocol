@@ -3,13 +3,11 @@
     padding: 0;
 }
 
-.custom-nav {
-    background-color: #2C7B42 !important;
-    color: white;
-}
-
-.nav-icon {
-    margin-right: 10px;
+/* icon sería el logo, todo lo q tenga la clase icon va a estar en este lugar y va a tener estas caract. */
+.icon {
+    left: 10px;
+    top: 10px;
+    position: absolute;
     vertical-align: middle;
 }
 
@@ -45,12 +43,12 @@
 }
 
 .login-input {
-    margin: 10px 0;
+    margin: 10px 0 !important;
     padding: 5px 10px;
 }
 
+/* esto sería el logo de abajo q tiene un css distinto porque es la misma imagen pero esta en otro lugar. */
 .footer span {
     margin: auto 0;
     color: white;
 }
-
