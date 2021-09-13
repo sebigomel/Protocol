@@ -24,13 +24,15 @@ export default function Principal() {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
+
                         <IconButton edge="start" className={classes.menuButton} color="primary" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
+
                         <Typography variant="h6" className={classes.title}>
-                            News
-                </Typography>
-                        <Button color="inherit">Login</Button>
+                            Opción 1
+                        </Typography>
+
                     </Toolbar>
                 </AppBar>
             </div>

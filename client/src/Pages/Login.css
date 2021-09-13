@@ -52,3 +52,7 @@
     margin: auto 0;
     color: white;
 }
+
+.forgot-pass {
+    text-decoration: none;
+}

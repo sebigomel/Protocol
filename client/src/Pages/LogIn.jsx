@@ -32,13 +32,16 @@ export default function LogIn() {
             <img src="/LogoProtocol.png" alt="logo" height="76" width="224" className='icon' />
 
             <div className="form">
+
                 <Typography variant="h5">Iniciar sesion:</Typography>
                 <TextField className='login-input' type='text' label='Nombre de usuario' variant="filled"></TextField>
                 <TextField className='login-input' type='password' label='Contraseña' variant="filled"></TextField>
+                
                 <div className="form-footer">
                     <Button className='custom-btn' variant='contained' color='primary' onClick={handleSubmit}>Iniciar sesion</Button>
-                    <Link to="#">Olvide mi contraseña</Link>
+                    <Link to="#" className='forgot-pass' >Olvide mi contraseña</Link>
                 </div>
+
             </div>
 
             <div className="footer">
