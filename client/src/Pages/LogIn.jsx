@@ -37,12 +37,12 @@ export default function LogIn() {
                 <TextField className='login-input' type='password' label='Contraseña' variant="filled"></TextField>
                 <div className="form-footer">
                     <Button className='custom-btn' variant='contained' color='primary' onClick={handleSubmit}>Iniciar sesion</Button>
-                    <Link href="#">Olvide mi contraseña</Link>
+                    <Link to="#">Olvide mi contraseña</Link>
                 </div>
             </div>
 
             <div className="footer">
-                <img src="/LogoProtocol.png" alt="logo" height="30"/>
+                <img src="/LogoProtocol.png" alt="logo" height="25"/>
             </div>
         </div>  
     )
