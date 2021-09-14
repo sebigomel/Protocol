@@ -23,9 +23,14 @@ const userSchema = new Schema({
     email : {
         type : String,
         required : true},
-    birthDate: {
+    birthdate: {
         type : Date,
-        immutable : true}
+        immutable : true},
+    workspaces: Array,
+    password: {
+        type : String,
+        required : true
+    }
 });
 
 const User = mongoose.model('User', userSchema);
