@@ -11,7 +11,9 @@ const userSchema = new Schema({
         required : true},
     username : {
         type : String,
-        required : true},
+        required : true,
+        trim : true,
+        lowercase : true},
     firstName : {
         type : String,
         required : true},
@@ -21,11 +23,11 @@ const userSchema = new Schema({
     email : {
         type : String,
         required : true},
-    bornAt: {
+    birthDate: {
         type : Date,
         immutable : true}
 });
 
-const userSchema = mongoose.model('UserSchema', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default userSchema;
+module.exports = User;
