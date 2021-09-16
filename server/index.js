@@ -4,13 +4,14 @@ const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
 const glob = require('glob')
-var morgan = require('morgan')
-const { initialize } = require('passport');
+const morgan = require('morgan')
+const crypto = require('crypto')
 
 require('dotenv').config();
 
 const app = express();
 
+require('./config/passport');
 
 app.use(cors());
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
 app.use(passport.initialize());
+
 
 glob.sync("./routes/**/*.js").forEach(function (file) {
         let modulePath = path.resolve(file)

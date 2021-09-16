@@ -10,21 +10,33 @@ let createUser = async (req, res) => {
     const email = req.body.email;
     const birthdate = req.body.birthdate;
     const password = req.body.password;
+    const passwordCheck = req.body.passwordCheck;
 
-    const newUserData = {
-        cardId,
-        username,
-        firstName,
-        lastName,
-        email,
-        birthdate
+    const existingEmail = await User.findOne({email : email});
+    if(existingEmail) {
+        return res
+             .status(400)
+             .json({ msg : "An account with this email already exists" })
+    } 
+
+    if(password !== passwordCheck){
+        return res
+            .status(400)
+            .json({ msg : "Passwords do not match" })
     }
 
-    bcrypt.hash(password, 10, function(err, hash) {
-        newUserData[password] = hash; 
-    });
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = new User(newUserData);
+    const newUser = new User({
+        cardId : cardId,
+        username : username,
+        firstName : firstName,
+        lastName : lastName,
+        email : email,
+        birthdate : birthdate,
+        password : passwordHash
+    });
 
     try {
         await newUser.save();
@@ -32,6 +44,8 @@ let createUser = async (req, res) => {
     } catch (err) {
         res.status(409).json({ message: err.message });
     }
+
+
 }
 
 module.exports = createUser;

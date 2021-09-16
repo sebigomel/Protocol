@@ -5,10 +5,8 @@ const ObjectId = Schema.ObjectId;
 
 
 const userSchema = new Schema({
-    userId : ObjectId,
-    cardId : {
-        type : Number,
-        required : true},
+    __id : ObjectId,
+    cardId : Number,
     username : {
         type : String,
         required : true,
@@ -29,7 +27,11 @@ const userSchema = new Schema({
     workspaces: Array,
     password: {
         type : String,
-        required : true
+        required : true},
+    passwordCheck: String,
+    verified: {
+        type : Boolean,
+        default : false
     }
 });
 
