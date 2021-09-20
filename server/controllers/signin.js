@@ -16,8 +16,14 @@ let authenticateUser = async (req, res) => {
 
         const token = jwt.sign({email :existingUser.email, __id :existingUser.__id}, process.env.SECRET_KEY, {expiresIn: 60 * 60 * 24});
 
+        userData = {
+            email: existingUser.email,
+            __id: existingUser.__id,
+            username: existingUser.username,
+            token: token
+        }
 
-        res.status(200).send(token)
+        res.status(200).send(userData)
     }
     catch(err){
         res.status(500).json({ message: 'Something went wrong'})

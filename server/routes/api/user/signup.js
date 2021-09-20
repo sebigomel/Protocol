@@ -1,4 +1,4 @@
-const createUser  = require('../../controllers/signup')
+const createUser  = require('../../../controllers/signup')
 
 
 module.exports = (app, path) => {

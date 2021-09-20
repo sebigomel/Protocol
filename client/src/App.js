@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 import './App.css'
 import Principal from './Pages/Principal';
+import { useState } from "react";
+import { useEffect } from "react";
 
 const theme = createTheme({
   palette: {
@@ -16,12 +18,20 @@ const theme = createTheme({
 });
 
 function App() {
+  const [userInfo, setUserInfo] = useState({})
+
+  useEffect(() => {
+    window.userInfo = userInfo
+  }, [userInfo])
+
   return (
     <MuiThemeProvider theme={theme}>
       <div className="App">
         <Switch>
-          <Route path="/login" component={LogIn}/>
-          <Route path="/" exact component={Principal}/>
+          <Route path="/login">
+            <LogIn setUserInfo={setUserInfo} />
+          </Route>
+          <Route path="/" exact component={Principal} />
         </Switch>
       </div>
     </MuiThemeProvider>

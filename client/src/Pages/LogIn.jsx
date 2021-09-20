@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import './Login.css'
 import Button from '@material-ui/core/Button';
@@ -19,8 +19,28 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function LogIn() {
+export default function LogIn({setUserInfo}) {
     const classes = useStyles();
+
+    useEffect(() => {
+        /*         const headers = new Headers()
+                headers.append('Content-Type', 'application/json')
+                const body = JSON.stringify({ token: window.localStorage.getItem("token") })
+                const userOptions = {
+                    method: 'GET',
+                    body: body,
+                    headers: headers
+                }
+        
+                fetch('http://localhost:5000/api/user/signin', userOptions)
+                    .then(res => res.text())
+                    .then(token => {
+                        if(token) {
+                            window.localStorage.setItem('token', token)
+                            window.location.pathname = '/'
+                        }
+                    }) */
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,11 +59,17 @@ export default function LogIn() {
             headers: headers
         }
 
-        fetch('http://localhost:5000/api/login', loginOptions)
-            .then(res => res.text())
-            .then(token => {
-                console.log(token);
-                window.localStorage.setItem('token', token)
+        fetch('http://localhost:5000/api/user/login', loginOptions)
+            .then(res => { if (res.status === 200) return res.json() })
+            .then(json => {
+                if (json) {
+                    window.localStorage.setItem('token', json.token)
+                    const parsedJson = [...json]
+                    delete parsedJson.token
+                    setUserInfo(parsedJson)
+                    console.log(parsedJson)
+                    window.location.pathname = '/'
+                }
             })
     }
 
@@ -55,7 +81,7 @@ export default function LogIn() {
             <div className="form">
 
                 <Typography variant="h5">Iniciar sesion:</Typography>
-                <TextField className='login-input' type='text' label='Email' variant="filled" name="email"></TextField>
+                <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
                 <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
 
                 <div className="form-footer">
