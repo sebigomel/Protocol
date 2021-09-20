@@ -5,7 +5,6 @@ const path = require('path');
 const passport = require('passport');
 const glob = require('glob')
 const morgan = require('morgan')
-const crypto = require('crypto')
 
 require('dotenv').config();
 
@@ -18,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
 
 app.use(passport.initialize());
 
