@@ -16,13 +16,13 @@ let authenticateUser = async (req, res) => {
 
         const token = jwt.sign({email :existingUser.email, __id :existingUser.__id}, process.env.SECRET_KEY, {expiresIn: 60 * 60 * 24});
 
-        res.status(200).json({ result: existingUser, token })
+
+        res.status(200).send(token)
     }
     catch(err){
         res.status(500).json({ message: 'Something went wrong'})
     }
 }
 
-// passport.authenticate('jwt', { session: false })
 
 module.exports = authenticateUser;
