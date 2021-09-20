@@ -11,7 +11,9 @@ require('dotenv').config();
 
 const app = express();
 
-require('./config/passport');
+app.use(passport.initialize());
+
+require('./config/passport')(passport);
 
 app.use(cors());
 
@@ -19,8 +21,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('tiny'));
-
-app.use(passport.initialize());
 
 
 glob.sync("./routes/**/*.js").forEach(function (file) {

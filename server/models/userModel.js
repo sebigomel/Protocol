@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
     __id : ObjectId,
     cardId : Number,
     username : {
@@ -35,6 +35,6 @@ const userSchema = new Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
