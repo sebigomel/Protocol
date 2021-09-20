@@ -21,7 +21,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/login" component={LogIn}/>
-          <Route path="/" component={Principal}/>
+          <Route path="/" exact component={Principal}/>
         </Switch>
       </div>
     </MuiThemeProvider>
