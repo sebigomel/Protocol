@@ -1,5 +1,5 @@
-const User = require('../models/userModel')
-const bcrypt = require('bcrypt')
+const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
 
 let createUser = async (req, res) => {
 
@@ -16,13 +16,13 @@ let createUser = async (req, res) => {
     if(existingEmail) {
         return res
              .status(400)
-             .json({ msg : "An account with this email already exists" })
+             .json({ msg : "An account with this email already exists" });
     } 
 
     if(password !== passwordCheck){
         return res
             .status(400)
-            .json({ msg : "Passwords do not match" })
+            .json({ msg : "Passwords do not match" });
     }
 
     const salt = await bcrypt.genSalt();
