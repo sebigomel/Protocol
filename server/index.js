@@ -36,6 +36,8 @@ connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => console.log("Connected to database"))
         .catch((err) => console.log(err.message))
 
+set('useNewUrlParser', true);
 set('useFindAndModify', false)
+set('useCreateIndex', true);
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))

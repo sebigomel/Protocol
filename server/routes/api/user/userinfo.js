@@ -1,9 +1,7 @@
 const passport = require('passport');
-const User = require('../../../models/userModel')
+const getUser = require('../../../controllers/user.js')
 
 module.exports = (app, path) => {
-    app.get(path, passport.authenticate('jwt', { session: false }),  (req, res) => {
-        res.send('authorized')
-    })
+    app.get(path + '/:username', passport.authenticate('jwt', { session: false }), getUser)
 }
 
