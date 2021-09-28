@@ -1,16 +1,26 @@
 const Workspace = require('../models/workspaceModel');
-const User = require('../models/userModel');
+const User = require('../models/userModel')
 
-let createWorkspace = async (req, res) => {
-    let userid = req.params.userid;
-    newWorkspace = new Workspace({name: "Workspace", admins: [{ admin: userid }] });
+let createWorkspace = (req, res) => {
+    Workspace.create({name : `Workspace  ${req.user.workspaces.length + 1}`, admins: req.user._id}, function (err, workspace) {
+        if (err) return res.status(500).json(err.message);
+        console.log(workspace)
+        User.findByIdAndUpdate(
+            {_id : req.user._id },
+            {$push: {workspaces: workspace._id}},
+            {new: true, useFindAndModify: false},
+            function (err, user) {
+                if (err) return res.status(500).json(err.message);
+                res.status(201).json(user);})
+    })
+};
 
-    try {
-        await newWorkspace.save();
-        res.sendStatus(201);
-    } catch (err) {
-        res.status(409).json({ message: err.message });
+let getWorkspaces = async (req, res) => {
+    User.findById({_id: req.user._id}).
+      populate("workspaces").
+      exec(function (err, user) {
+        if (err) return res.status(500).json(err.message);
+        res.status(200).send(user.workspaces);
+      });
     }
-}
-
-module.exports = createWorkspace;
+module.exports = {createWorkspace, getWorkspaces};

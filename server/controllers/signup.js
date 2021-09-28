@@ -40,7 +40,7 @@ let createUser = async (req, res) => {
 
     try {
         await newUser.save();
-        res.sendStatus(201);
+        res.status(201).json(newUser);
     } catch (err) {
         res.status(409).json({ message: err.message });
     }

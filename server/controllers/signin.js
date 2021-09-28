@@ -14,11 +14,11 @@ let authenticateUser = async (req, res) => {
 
         if(!correctPassword) return res.status(400).json({ message: 'User or password are incorrect'})
 
-        const token = jwt.sign({email :existingUser.email, __id :existingUser.__id}, process.env.SECRET_KEY);
+        const token = jwt.sign({email :existingUser.email, sub :existingUser._id}, process.env.SECRET_KEY,{ expiresIn: '1d'});
 
         userData = {
             email: existingUser.email,
-            __id: existingUser.__id,
+            _id: existingUser._id,
             username: existingUser.username,
             token: token
         }

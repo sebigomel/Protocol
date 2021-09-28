@@ -12,7 +12,7 @@ const app = express();
 
 app.use(passport.initialize());
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 require('./config/passport')(passport);
 

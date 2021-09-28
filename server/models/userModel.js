@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 
 const UserSchema = new Schema({
-    __id : ObjectId,
     cardId : Number,
     username : {
         type : String,
@@ -25,7 +23,7 @@ const UserSchema = new Schema({
     birthdate: {
         type : Date,
         immutable : true},
-    workspaces: [ {type: ObjectId, ref: 'Workspace'} ],
+    workspaces: [ {type: Schema.Types.ObjectId, ref: 'Workspace'} ],
     password: {
         type : String,
         required : true},
