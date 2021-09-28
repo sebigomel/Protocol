@@ -6,8 +6,9 @@ const ObjectId = Schema.ObjectId;
 const WorkspaceSchema = new Schema({
     __id : ObjectId,
     name: {type: String, required: true},
-    admin: [ {type: ObjectId, required: true, ref: 'User'} ],
-    employees: [ {type: ObjectId, ref: 'User'} ]
+    admins: [{ admin: {type: ObjectId, required: true, ref: 'User'} }],
+    employees: [{ employee: {type: ObjectId, ref: 'User'} }],
+    devices: [ {type: ObjectId, ref: 'Device'} ]
 });
 
 const Workspace = mongoose.model('Workspace', WorkspaceSchema);
