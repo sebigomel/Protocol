@@ -32,8 +32,8 @@ function App() {
           <Route path="/login">
             <LogIn setUserInfo={setUserInfo} />
           </Route>
-          <Route path="/" exact component={Principal} />
-          <Route path="/" exact component={Singup} />
+          <Route path="/principal" exact component={Principal} />
+          <Route path="/singup" exact component={Singup} />
         </Switch>
       </div>
     </MuiThemeProvider>

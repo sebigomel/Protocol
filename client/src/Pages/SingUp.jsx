@@ -29,8 +29,8 @@ export default function Singup() {
 
         <div className="form">
 
-            <Typography variant="h5">Iniciar sesion:</Typography>
-            <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
+            <Typography variant="h5">Crear Cuenta:</Typography>
+            <TextField cqlassName='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
             <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
 
             <div className="form-footer">

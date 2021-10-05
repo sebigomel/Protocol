@@ -11,7 +11,7 @@
     vertical-align: middle;
 }
 
-.login {
+.singup {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
