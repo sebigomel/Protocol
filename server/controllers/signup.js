@@ -11,6 +11,8 @@ let createUser = async (req, res) => {
     const birthdate = req.body.birthdate;
     const password = req.body.password;
     const passwordCheck = req.body.passwordCheck;
+    const vaccine = req.body.vaccine;
+    const doses = req.body.doses
 
     const existingEmail = await User.findOne({email : email});
     if(existingEmail) {
@@ -35,7 +37,8 @@ let createUser = async (req, res) => {
         lastName : lastName,
         email : email,
         birthdate : birthdate,
-        password : passwordHash
+        password : passwordHash,
+        vaccination: {vaccine: vaccine, doses: doses}
     });
 
     try {

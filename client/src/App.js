@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 import './App.css'
 import Principal from './Pages/Principal';
+import Singup from './Pages/SingUp';
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -32,6 +33,7 @@ function App() {
             <LogIn setUserInfo={setUserInfo} />
           </Route>
           <Route path="/" exact component={Principal} />
+          <Route path="/" exact component={Singup} />
         </Switch>
       </div>
     </MuiThemeProvider>

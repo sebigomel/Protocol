@@ -9,7 +9,6 @@ const UserSchema = new Schema({
         type : String,
         required : true,
         trim : true,
-        lowercase : true,
         unique: true,},
     firstName : {
         type : String,
@@ -31,6 +30,10 @@ const UserSchema = new Schema({
     verified: {
         type : Boolean,
         default : false
+    },
+    vaccination: {
+        vaccine: String,
+        doses: Number
     }
 });
 

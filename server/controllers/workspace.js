@@ -4,9 +4,7 @@ const User = require('../models/userModel')
 let createWorkspace = (req, res) => {
     Workspace.create({name : `Workspace  ${req.user.workspaces.length + 1}`, admins: req.user._id}, function (err, workspace) {
         if (err) return res.status(500).json(err.message);
-        console.log(workspace)
-        User.findByIdAndUpdate(
-            {_id : req.user._id },
+        User.findByIdAndUpdate(req.user._id ,
             {$push: {workspaces: workspace._id}},
             {new: true, useFindAndModify: false},
             function (err, user) {
@@ -16,11 +14,13 @@ let createWorkspace = (req, res) => {
 };
 
 let getWorkspaces = async (req, res) => {
-    User.findById({_id: req.user._id}).
+    User.
+      findById(req.user._id).
       populate("workspaces").
       exec(function (err, user) {
         if (err) return res.status(500).json(err.message);
         res.status(200).send(user.workspaces);
       });
     }
+
 module.exports = {createWorkspace, getWorkspaces};
