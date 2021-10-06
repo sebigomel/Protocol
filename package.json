@@ -4,6 +4,7 @@
         "back": "cd server && npm start"
     },
     "dependencies": {
+        "@material-ui/lab": "^4.0.0-alpha.60",
         "glob": "^7.1.7"
     }
 }
