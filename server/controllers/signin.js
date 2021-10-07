@@ -1,34 +1,39 @@
-const User = require('../models/userModel')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-let authenticateUser = async (req, res) => { 
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+let authenticateUser = async (req, res) => {
+  const { email, password } = req.body;
 
-    const {email, password} = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
 
-    try{
-        const existingUser = await User.findOne({ email })
+    if (!existingUser) return res.status(404).send("User does not exist");
 
-        if(!existingUser) return res.status(404).send('User does not exist')
+    const correctPassword = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
 
-        const correctPassword = await bcrypt.compare(password, existingUser.password);
+    if (!correctPassword)
+      return res.status(400).send("User or password are incorrect");
 
-        if(!correctPassword) return res.status(400).send('User or password are incorrect')
+    const token = jwt.sign(
+      { email: existingUser.email, sub: existingUser._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1d" }
+    );
 
-        const token = jwt.sign({email :existingUser.email, sub :existingUser._id}, process.env.SECRET_KEY,{ expiresIn: '1d'});
+    userData = {
+      email: existingUser.email,
+      _id: existingUser._id,
+      username: existingUser.username,
+      token: token,
+    };
 
-        userData = {
-            email: existingUser.email,
-            _id: existingUser._id,
-            username: existingUser.username,
-            token: token
-        }
-
-        res.status(200).send(userData)
-    }
-    catch(err){
-        res.status(500).send('Something went wrong')
-    }
-}
-
+    res.status(200).send(userData);
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+};
 
 module.exports = authenticateUser;

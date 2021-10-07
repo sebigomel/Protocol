@@ -1,13 +1,19 @@
-const Device = require('../models/deviceModel');
-const Workspace = require('../models/workspaceModel');
+const Device = require("../models/deviceModel");
+const Workspace = require("../models/workspaceModel");
+
+module.exports = {
+  create: (req, res) => {},
+};
+
+/*
 
 let configDevice = async (req, res) => {
-    //configCode = Math.floor(100000 + Math.random() * 900000)
+    configCode = Math.floor(100000 + Math.random() * 900000)
 
 }
 
 let addDevice = (req, res) => {
-    /*serialNumber = req.body.serialNumber
+    serialNumber = req.body.serialNumber
     workspaceId = req.params.workspaceId
     Device.create({name : `Entrance  ${req.user.workspaces.length + 1}`, admins: req.user._id}, function (err, workspace) {
         if (err) return res.status(500).json(err.message);
@@ -20,7 +26,3 @@ let addDevice = (req, res) => {
                 if (err) return res.status(500).json(err.message);
                 res.status(201).json(user);})
     })*/
-};
-
-
-module.exports = addDevice

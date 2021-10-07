@@ -1,5 +1,5 @@
-const authenticateUser  = require('../../../controllers/signin')
+const authenticateUser = require("../../../controllers/signin");
 
 module.exports = (app, path) => {
-    app.post(path, authenticateUser)
+  app.post(path, authenticateUser);
 };

@@ -1,6 +1,5 @@
-const createUser  = require('../../../controllers/signup')
-
+const createUser = require("../../../controllers/signup");
 
 module.exports = (app, path) => {
-    app.post(path , createUser)
+  app.post(path, createUser);
 };
