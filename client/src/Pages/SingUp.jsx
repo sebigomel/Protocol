@@ -34,8 +34,8 @@ export default function Singup() {
             <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
 
             <div className="form-footer">
-                <Button className='custom-btn' variant='contained' color='primary' type="submit">Iniciar sesion</Button>
-                <Link to="#" className='forgot-pass' >Olvide mi contraseña</Link>
+                <Button className='custom-btn' variant='contained' color='primary' type="submit">Crear cuenta</Button>
+                <Link to="#" className='forgot-pass' >Ya tengo una cuenta</Link>
             </div>
 
         </div>
