@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState } from 'react'
 import { Link } from "react-router-dom";
 import './Login.css'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from "@material-ui/core";
 import { Typography } from '@material-ui/core/';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LogIn({setUserInfo}) {
+    const [errorMessage, setErrorMessage] = useState("")
     const classes = useStyles();
 
     useEffect(() => {
@@ -42,6 +44,7 @@ export default function LogIn({setUserInfo}) {
                     }) */
     }, [])
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = document.forms.loginform
@@ -60,11 +63,12 @@ export default function LogIn({setUserInfo}) {
         }
 
         fetch('http://localhost:5000/api/user/login', loginOptions)
-            .then(res => { if (res.status === 200) return res.json() })
+            .then(res => { if (res.status === 200) return res.json()})
+            .catch(err => /*setErrorMessage(err.message)*/ console.log(err))
             .then(json => {
                 if (json) {
                     window.localStorage.setItem('token', json.token)
-                    const parsedJson = [...json]
+                    const parsedJson = [{...json}]
                     delete parsedJson.token
                     setUserInfo(parsedJson)
                     console.log(parsedJson)
@@ -88,7 +92,7 @@ export default function LogIn({setUserInfo}) {
                     <Button className='custom-btn' variant='contained' color='primary' type="submit">Iniciar sesion</Button>
                     <Link to="#" className='forgot-pass' >Olvide mi contraseña</Link>
                 </div>
-
+                {errorMessage  && <Alert severity="error">{errorMessage}</Alert>}
             </div>
 
             <div className="footer">

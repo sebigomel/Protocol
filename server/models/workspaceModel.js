@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -11,6 +11,6 @@ const WorkspaceSchema = new Schema({
     records: [{ type: Schema.Types.ObjectId, ref: 'Record' }]
 });
 
-const Workspace = mongoose.model('Workspace', WorkspaceSchema);
+const Workspace = mongoose.model("Workspace", WorkspaceSchema);
 
 module.exports = Workspace;
