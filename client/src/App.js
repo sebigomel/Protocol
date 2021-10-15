@@ -2,12 +2,14 @@ import { Route } from "react-router-dom";
 import { BrowserRouter as Switch } from "react-router-dom";
 import LogIn from "./Pages/LogIn"
 import { Link } from "react-router-dom";
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css'
 import Principal from './Pages/Principal';
 import Singup from './Pages/SingUp';
 import { useState } from "react";
 import { useEffect } from "react";
+import makeStyles from '@mui/styles/makeStyles';
+
 
 const theme = createTheme({
   palette: {
@@ -18,7 +20,17 @@ const theme = createTheme({
   }
 });
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+}));
+
+
+function AppContent(props) {
   const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
@@ -26,17 +38,25 @@ function App() {
   }, [userInfo])
 
   return (
-    <MuiThemeProvider theme={theme}>
       <div className="App">
-        <Switch>
+        <Switch >
           <Route path="/login">
             <LogIn setUserInfo={setUserInfo} />
           </Route>
-          <Route path="/principal" exact component={Principal} />
+          <Route path="/principal" exact component = {Principal} />
           <Route path="/singup" exact component={Singup} />
         </Switch>
       </div>
-    </MuiThemeProvider>
+  );
+}
+
+
+
+function App(props) {
+  return (
+    <ThemeProvider theme={theme}>
+      <AppContent {...props} />
+    </ThemeProvider>
   );
 }
 

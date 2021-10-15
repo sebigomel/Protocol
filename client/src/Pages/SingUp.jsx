@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import './SingUp.css'
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from "@material-ui/core";
-import { Typography } from '@material-ui/core/';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@mui/styles';
+import { TextField } from "@mui/material";
+import { Typography } from '@mui/material/';
 
 const useStyles = makeStyles((theme) => ({
     root: {
