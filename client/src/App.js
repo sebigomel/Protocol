@@ -13,7 +13,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 const theme = createTheme({
   palette: {
-    /* cada cosa q tenga como color "primary", va a usareste verde*/
+    /* cada cosa q tenga como color "primary", va a usar este verde*/
     primary: {
       main: '#2C7B42'
     }

@@ -15,23 +15,27 @@ export default function LogIn({ setUserInfo }) {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    /*         const headers = new Headers()
-                headers.append('Content-Type', 'application/json')
-                const body = JSON.stringify({ token: window.localStorage.getItem("token") })
-                const userOptions = {
-                    method: 'GET',
-                    body: body,
-                    headers: headers
-                }
-        
-                fetch('http://localhost:5000/api/user/signin', userOptions)
-                    .then(res => res.text())
-                    .then(token => {
-                        if(token) {
-                            window.localStorage.setItem('token', token)
-                            window.location.pathname = '/'
-                        }
-                    }) */
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      headers.append("Authorization", `Bearer ${token}`);
+    }
+
+    const userOptions = {
+      method: "GET",
+      headers: headers,
+    };
+
+    fetch("http://localhost:5000/api/user/login", userOptions)
+      .then((res) => {
+        if (!res.ok) return null; else return res.text();
+      })
+      .then((token) => {
+        if (token) {
+          window.location.pathname = "/";
+        }
+      });
   }, []);
 
   const handleClickShowPassword = () => {
@@ -41,7 +45,6 @@ export default function LogIn({ setUserInfo }) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,20 +109,21 @@ export default function LogIn({ setUserInfo }) {
           variant="filled"
           name="password"
           InputLabelProps={{
-            htmlFor:"standard-adornment-password"
+            htmlFor: "standard-adornment-password",
           }}
           InputProps={{
-            type : showPassword ? 'text' : 'password',
+            type: showPassword ? "text" : "password",
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton 
-                onClick={handleClickShowPassword}
-                onMouseEnter={handleMouseDownPassword}
-                size="large"/>
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseEnter={handleMouseDownPassword}
+                  edge="end"
+                />
                 {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                 <IconButton />
               </InputAdornment>
-            )
+            ),
           }}
         ></TextField>
 
@@ -137,9 +141,7 @@ export default function LogIn({ setUserInfo }) {
           </Link>
         </div>
         <div className="error-message">
-          {errorMessage !== "" && (
-            <Alert severity="error"> {errorMessage} </Alert>
-          )}
+          {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
       </div>
 

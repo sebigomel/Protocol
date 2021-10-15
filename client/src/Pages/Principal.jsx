@@ -23,9 +23,7 @@ export default function Principal() {
   useEffect(() => {
     if (!window.localStorage.getItem("token")) {
       window.location.pathname = "/login";
-    } else {
-      const token = window.localStorage.getItem("token");
-    }
+    } 
   }, []);
 
   return (
