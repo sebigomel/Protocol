@@ -5,9 +5,14 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Alert } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { IconButton } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 
 export default function LogIn({ setUserInfo }) {
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     /*         const headers = new Headers()
@@ -29,6 +34,15 @@ export default function LogIn({ setUserInfo }) {
                     }) */
   }, []);
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = document.forms.loginform;
@@ -38,7 +52,7 @@ export default function LogIn({ setUserInfo }) {
     const pswrd = data.get("password");
 
     const headers = new Headers();
-    headers.append("Content-Type", "form/multipart");
+    headers.append("Content-Type", "application/json");
     const body = JSON.stringify({ email: email, password: pswrd });
     const loginOptions = {
       method: "POST",
@@ -49,9 +63,8 @@ export default function LogIn({ setUserInfo }) {
     fetch("http://localhost:5000/api/user/login", loginOptions)
       .then((res) => {
         if (!res.ok) {
-          throw Error(res.text());
-        }
-        return res.json();
+          res.text().then((text) => setErrorMessage(text));
+        } else return res.json();
       })
       .then((json) => {
         if (json) {
@@ -63,7 +76,7 @@ export default function LogIn({ setUserInfo }) {
         }
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error);
       });
   };
 
@@ -92,6 +105,22 @@ export default function LogIn({ setUserInfo }) {
           label="Contraseña"
           variant="filled"
           name="password"
+          InputLabelProps={{
+            htmlFor:"standard-adornment-password"
+          }}
+          InputProps={{
+            type : showPassword ? 'text' : 'password',
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton 
+                onClick={handleClickShowPassword}
+                onMouseEnter={handleMouseDownPassword}
+                size="large"/>
+                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                <IconButton />
+              </InputAdornment>
+            )
+          }}
         ></TextField>
 
         <div className="form-footer">
