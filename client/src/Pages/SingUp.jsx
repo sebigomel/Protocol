@@ -30,9 +30,12 @@ export default function Singup() {
         <div className="form">
 
             <Typography variant="h5">Crear Cuenta:</Typography>
-            <TextField cqlassName='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
+            <TextField className='login-input' type='text' label='User' variant="filled" name="user"></TextField>
+            <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
             <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
-
+            <TextField className='login-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
+            <TextField className='login-input' type='text' label='Razón' variant="filled" name="razon"></TextField>
+        
             <div className="form-footer">
                 <Button className='custom-btn' variant='contained' color='primary' type="submit">Crear cuenta</Button>
                 <Link to="#" className='forgot-pass' >Ya tengo una cuenta</Link>

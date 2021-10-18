@@ -104,15 +104,13 @@ export default function LogIn() {
           variant="filled"
           name="email"
         ></TextField>
+
         <TextField
           className="login-input"
           type="password"
           label="Contraseña"
           variant="filled"
           name="password"
-          InputLabelProps={{
-            htmlFor: "standard-adornment-password",
-          }}
           InputProps={{
             type: showPassword ? "text" : "password",
             endAdornment: (
@@ -120,10 +118,9 @@ export default function LogIn() {
                 <IconButton
                   onClick={handleClickShowPassword}
                   onMouseEnter={handleMouseDownPassword}
-                  edge="end"
                   size="large"
-                />
-                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                >
+                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
                 <IconButton />
               </InputAdornment>
             ),
