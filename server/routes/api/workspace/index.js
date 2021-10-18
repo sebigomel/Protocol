@@ -17,4 +17,9 @@ module.exports = (app, path) => {
     passport.authenticate("jwt", { session: false }),
     WorkspaceCtr.getOne
   );
+  app.delete(
+    path + "/:id",
+    passport.authenticate("jwt", { session: false }),
+    WorkspaceCtr.delete
+  );
 };

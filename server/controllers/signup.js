@@ -15,13 +15,11 @@ let createUser = async (req, res) => {
 
   const existingEmail = await User.findOne({ email: email });
   if (existingEmail) {
-    return res
-      .status(400)
-      .json({ msg: "An account with this email already exists" });
+    return res.status(400).send("An account with this email already exists");
   }
 
   if (password !== passwordCheck) {
-    return res.status(400).json({ msg: "Passwords do not match" });
+    return res.status(400).send("Passwords do not match");
   }
 
   const salt = await bcrypt.genSalt();
@@ -42,7 +40,7 @@ let createUser = async (req, res) => {
     await newUser.save();
     res.status(201).json(newUser);
   } catch (err) {
-    res.status(409).json({ message: err.message });
+    res.status(409).send(err.message);
   }
 };
 

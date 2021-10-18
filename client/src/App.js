@@ -1,14 +1,12 @@
 import { Route } from "react-router-dom";
 import { BrowserRouter as Switch } from "react-router-dom";
 import LogIn from "./Pages/LogIn"
-import { Link } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css'
 import Principal from './Pages/Principal';
 import Singup from './Pages/SingUp';
-import { useState } from "react";
-import { useEffect } from "react";
 import makeStyles from '@mui/styles/makeStyles';
+import Home from './Pages/Home';
 
 
 const theme = createTheme({
@@ -31,18 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 function AppContent(props) {
-  const [userInfo, setUserInfo] = useState({})
-
-  useEffect(() => {
-    window.userInfo = userInfo
-  }, [userInfo])
+  
 
   return (
       <div className="App">
         <Switch >
           <Route path="/login">
-            <LogIn setUserInfo={setUserInfo} />
+            <LogIn/>
           </Route>
+          <Route path="/home" exact component = {Home} />
           <Route path="/principal" exact component = {Principal} />
           <Route path="/singup" exact component={Singup} />
         </Switch>

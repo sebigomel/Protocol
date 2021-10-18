@@ -9,10 +9,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import { InputAdornment } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
-export default function LogIn({ setUserInfo }) {
+export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     const headers = new Headers();
@@ -29,11 +31,12 @@ export default function LogIn({ setUserInfo }) {
 
     fetch("http://localhost:5000/api/user/login", userOptions)
       .then((res) => {
-        if (!res.ok) return null; else return res.text();
+        if (!res.ok) return;
+        else return res.text();
       })
       .then((token) => {
         if (token) {
-          window.location.pathname = "/";
+          history.push("/home");
         }
       });
   }, []);
@@ -74,8 +77,7 @@ export default function LogIn({ setUserInfo }) {
           window.localStorage.setItem("token", json.token);
           const parsedJson = [{ ...json }];
           delete parsedJson.token;
-          setUserInfo(parsedJson);
-          window.location.pathname = "/";
+          history.push("/home");
         }
       })
       .catch((error) => {
@@ -119,6 +121,7 @@ export default function LogIn({ setUserInfo }) {
                   onClick={handleClickShowPassword}
                   onMouseEnter={handleMouseDownPassword}
                   edge="end"
+                  size="large"
                 />
                 {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                 <IconButton />

@@ -39,4 +39,20 @@ module.exports = {
     let workspace = await Workspace.findById(workspaceId);
     res.status(200).json(workspace);
   },
+
+  delete: async (req, res) => {
+    let id = req.params.id;
+    Workspace.findByIdAndDelete(id, (err, workspace) => {
+      if(!workspace) return res.status(404).send("Workspace does not exist");
+      if (err) return res.status(500).json(err.message);
+      User.findByIdAndUpdate(req.user._id, {
+        $pull: {
+          workspaces: { $in: [workspace._id] },
+        },
+      }, (err, user) => {
+        if (err) return res.status(500).json(err.message);
+        res.status(200).json(user.workspaces);
+      });
+    });
+  },
 };

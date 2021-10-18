@@ -38,7 +38,7 @@
     background-color: #2C7B42;
     padding: 0 10px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     vertical-align: middle;
 }
 
