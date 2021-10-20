@@ -13,7 +13,7 @@ module.exports = {
   verifyEmail: async (req, res) => {},
 
   update: async (req, res) => {
-    const { email, password, vaccine, doses } = req.body;
+    const { cardId, email, password, vaccine, doses } = req.body;
     data = {
       cardId: cardId,
       email: email,
