@@ -43,16 +43,34 @@ module.exports = {
   delete: async (req, res) => {
     let id = req.params.id;
     Workspace.findByIdAndDelete(id, (err, workspace) => {
-      if(!workspace) return res.status(404).send("Workspace does not exist");
+      if (!workspace) return res.status(404).send("Workspace does not exist");
       if (err) return res.status(500).json(err.message);
-      User.findByIdAndUpdate(req.user._id, {
-        $pull: {
-          workspaces: { $in: [workspace._id] },
-        },
-      }, (err, user) => {
-        if (err) return res.status(500).json(err.message);
-        res.status(200).json(user.workspaces);
-      });
+      const allUsers = workspace.admins.concat(workspace.employees);
+      User.updateMany(
+        { _id: { $in: allUsers } },
+        { $pull: { workspaces: workspace._id } },
+        function (err, user) {
+          if (err) return res.status(500).json(err.message);
+          User.findById(req.user._id, function (err, user) {
+            if (err) return res.status(500).json(err.message);
+            res.status(200).json(user.workspaces);
+          });
+        }
+      );
     });
+  },
+
+  sendInvite: async (req, res) => {},
+
+  update: async (req, res) => {
+    let workspaceId = req.params.id
+    let workspace = await Workspace.findById(workspaceId);
+
+    workspace.name = req.body.name
+
+    workspace.save().then(emp => {
+      res.status(200).send("Your profile has been successfully updated");
+      console.log(emp);
+    })
   },
 };

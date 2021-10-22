@@ -42,7 +42,8 @@ const UserSchema = new Schema({
   },
   role: { type: Schema.Types.ObjectId, ref: "Role" },
   verificationToken: String,
-  profileImageUrl: String
+  profileImageUrl: String,
+  invitations: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 const User = mongoose.model("User", UserSchema);
