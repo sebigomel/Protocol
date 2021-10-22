@@ -128,26 +128,29 @@ export default function LogIn() {
         ></TextField>
 
         <div className="form-footer">
-          <Button
+          <Button>
             className="custom-btn"
             variant="contained"
             color="primary"
             type="submit"
-          >
             Iniciar sesion
           </Button>
+
           <Link to="#" className="forgot-pass">
             Olvide mi contraseña
           </Link>
         </div>
+
         <div className="error-message">
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
+
       </div>
 
       <div className="footer">
         <img src="/LogoProtocol.png" alt="logo" height="25" />
       </div>
+      
     </form>
   );
 }
