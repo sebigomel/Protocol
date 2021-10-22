@@ -4,6 +4,8 @@
         "back": "cd server && npm start"
     },
     "dependencies": {
-        "glob": "^7.1.7"
+        "bootstrap": "^5.1.3",
+        "glob": "^7.1.7",
+        "react-bootstrap": "^2.0.0"
     }
 }

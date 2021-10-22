@@ -1,28 +1,33 @@
-* {
+*  {
     margin: 0;
     padding: 0;
 }
 
-/* icon sería el logo, todo lo q tenga la clase icon va a estar en este lugar y va a tener estas caract. */
+/* .navtomy{
+    display: flex;
+    position: fixed;
+}  */
+
+ 
 .icon {
     left: 10px;
     top: 10px;
     position: relative;
     vertical-align: middle;
 }
-
+ 
 .signup {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
-}
+   /* height: 100vh;
+    overflow: auto; no se xq pero con esta cosa puesta el foter queda mal, no entiendo q hace */
+} 
 
 .form {
     display: flex;
     flex-direction: column;
     margin: auto;
-    overflow: auto;
     margin: 10px 50px;
 }
 
@@ -31,6 +36,7 @@
     flex-direction:row;
     justify-content: space-between;
     align-items: center;
+
 }
 
 .footer {
@@ -47,7 +53,7 @@
     padding: 5px 10px;
 }
 
-/* esto sería el logo de abajo q tiene un css distinto porque es la misma imagen pero esta en otro lugar. */
+
 .footer span {
     margin: auto 0;
     color: white;
@@ -56,3 +62,4 @@
 .forgot-pass {
     text-decoration: none“ø;
 }
+/*  */

@@ -23,9 +23,12 @@ export default function Singup() {
     const classes = useStyles();
     
     return (
-    <div className="signup">
+    <div className="signup"
+    // style={{overflow: "auto"}}
+    >
 
-        <img src="/LogoProtocol.png" alt="logo" height="76" width="224" className='icon' />
+        { <img src="/LogoProtocol.png" alt="logo" height="76" width="224" className='icon' className='navtomy'/>}
+
 
         <div className="form">
 
