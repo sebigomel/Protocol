@@ -7,12 +7,19 @@ import Principal from "./Pages/Principal";
 import Singup from "./Pages/SingUp";
 import makeStyles from "@mui/styles/makeStyles";
 import Home from "./Pages/Home";
+import '@fontsource/inter/500.css';
 
 const theme = createTheme({
   palette: {
     /* cada cosa q tenga como color "primary", va a usar este verde*/
     primary: {
       main: "#2C7B42",
+    },
+    typography: {
+      fontFamily: ["Inter", "Open Sans"].join(","),
+      h5: {
+        fontFamily: '"Inter", Open Sans',
+       }
     },
   },
 });
@@ -26,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AppContent(props) {
+function AppContent() {
   return (
     <div className="App">
       <Switch>

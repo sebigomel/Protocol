@@ -52,8 +52,19 @@
 }
 
 .form-vaccination{
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-doses{
+    position: relative;
+}
+
+.doses-child{
+    display: flex;
+    align-items: center;
 }
 
 #combo-box-demo{

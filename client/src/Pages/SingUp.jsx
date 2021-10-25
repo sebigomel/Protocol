@@ -4,7 +4,15 @@ import "./SingUp.css";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import { TextField } from "@mui/material";
-import { Typography, Autocomplete, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup } from "@mui/material/";
+import {
+  Typography,
+  Autocomplete,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material/";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -34,7 +42,7 @@ export default function Singup() {
     "Johnson & Johnson",
     "Moderna",
     "Sinopharm",
-    "Abdala", 
+    "Abdala",
     "Convidecia",
     "Sputnik Light",
     "CoronaVac",
@@ -64,7 +72,7 @@ export default function Singup() {
       }
 
       <div className="form">
-        <Typography variant="h5">Crear Cuenta:</Typography>
+        <Typography fontFamily="Inter" >Crear Cuenta:</Typography>
         <div className="form-fields">
           <TextField
             className="signup-input"
@@ -151,7 +159,7 @@ export default function Singup() {
               )}
             />
           </LocalizationProvider>
-          <div className="form-vaccination signup-input">
+          <div className="form-vaccination">
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -161,26 +169,20 @@ export default function Singup() {
                 <TextField {...params} label="Vaccine" variant="filled" />
               )}
             />
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Doses</FormLabel>
-              <RadioGroup
-                aria-label="doses"
-                defaultValue="1"
-                name="radio-buttons-group"
-                row
-              >
-                <FormControlLabel
-                  value="1"
-                  control={<Radio />}
-                  label="1"
-                />
-                <FormControlLabel
-                  value="2"
-                  control={<Radio />}
-                  label="2"
-                />
-              </RadioGroup>
-            </FormControl>
+            <div className="form-doses">
+              <FormControl component="fieldset" className="doses-child">
+                <FormLabel component="legend">Dosis </FormLabel>
+                <RadioGroup
+                  aria-label="doses"
+                  defaultValue="1"
+                  name="radio-buttons-group"
+                  row
+                >
+                  <FormControlLabel value="1" control={<Radio />} label="1" />
+                  <FormControlLabel value="2" control={<Radio />} label="2" />
+                </RadioGroup>
+              </FormControl>
+            </div>
           </div>
         </div>
         <div className="form-footer">
