@@ -20,24 +20,44 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-   /* height: 100vh;
-    overflow: auto; no se xq pero con esta cosa puesta el foter queda mal, no entiendo q hace */
+    height: 100vh;
+     /* overflow: auto; no se xq pero con esta cosa puesta el foter queda mal, no entiendo q hace */
 } 
 
 .form {
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin: 10px 50px;
+    margin: 0 25%;
     justify-content: center;
 }
+
+.form-fields{
+    max-height: 80%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-fields::-webkit-scrollbar {
+    display: none;
+  }
 
 .form-footer {
     display: flex;
     flex-direction:row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 3%;
+}
 
+.form-vaccination{
+    display: flex;
+    flex-direction: row;
+}
+
+#combo-box-demo{
+    margin-right: 80%;
 }
 
 .footer {
