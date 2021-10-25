@@ -43,8 +43,16 @@ module.exports = function (passport) {
           if (user) {
             done(null, user);
           } else {
-            user = await User.create(newUser);
-            done(null, user);
+            let nonGoogleUser = await User.findOne({
+              email: profile.emails[0].value,
+            });
+            if (nonGoogleUser) {
+              nonGoogleUser.googleId = profile.id;
+              await nonGoogleUser.save();
+            } else {
+              user = await User.create(newUser);
+              done(null, user);
+            }
           }
         } catch (err) {
           console.error(err);
