@@ -9,12 +9,19 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import { InputAdornment } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import GoogleButton from "react-google-button";
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   let history = useHistory();
+  let { urlToken } = useParams();
+
+  if(urlToken){
+    window.localStorage.setItem("token", urlToken);
+    history.push('/home');
+  }
 
   useEffect(() => {
     const headers = new Headers();
@@ -126,7 +133,7 @@ export default function LogIn() {
           }}
         ></TextField>
 
-        <div className="form-footer">
+        <div className="login-form-footer">
           <Button
             className="custom-btn"
             variant="contained"
@@ -135,6 +142,11 @@ export default function LogIn() {
           >
             Iniciar sesion
           </Button>
+
+          <GoogleButton
+            type="light" 
+            onClick={() => {window.location.href = 'http://localhost:5000/api/user/auth/google'}}
+          />
 
           <Link to="#" className="forgot-pass">
             Olvide mi contraseña

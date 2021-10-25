@@ -26,10 +26,11 @@
   margin: 0 25%;
 }
 
-.form-footer {
+.login-form-footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  height: 25%;
   align-items: center;
 }
 

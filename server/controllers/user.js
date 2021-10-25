@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   getOthersInfo: async (req, res) => {
@@ -11,6 +12,14 @@ module.exports = {
     res.status(200).json(user);
   },
   verifyEmail: async (req, res) => {},
+
+  googleAuth: async (req, res) => {
+    const token = jwt.sign(
+      { email: req.user.email, sub: req.user._id },
+      process.env.SECRET_KEY
+    );
+    res.redirect(`http://localhost:3000/login/${token}`);
+  },
 
   update: async (req, res) => {
     const { cardId, email, password, vaccine, doses } = req.body;

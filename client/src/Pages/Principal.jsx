@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Principal() {
-  const classes = useStyles();
   const history = useHistory();
+  const classes = useStyles();
 
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
-      history.push = "/";
+      history.push("/home");
     } 
-  }, []);
+  }, [history]);
 
   return (
     <>
