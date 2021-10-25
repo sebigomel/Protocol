@@ -18,7 +18,6 @@ export default function LogIn() {
 
   useEffect(() => {
     const headers = new Headers();
-    headers.append("Content-Type", "application/json");
     const token = window.localStorage.getItem("token");
     if (token) {
       headers.append("Authorization", `Bearer ${token}`);
@@ -39,7 +38,7 @@ export default function LogIn() {
           history.push("/home");
         }
       });
-  }, []);
+  }, [history]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -94,8 +93,7 @@ export default function LogIn() {
         width="224"
         className="icon"
       />
-
-      <div className="form">
+      <div className="login-form">
         <Typography variant="h5">Iniciar sesion:</Typography>
         <TextField
           className="login-input"
@@ -120,7 +118,8 @@ export default function LogIn() {
                   onMouseEnter={handleMouseDownPassword}
                   size="large"
                 >
-                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
+                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </IconButton>
                 <IconButton />
               </InputAdornment>
             ),
@@ -128,11 +127,12 @@ export default function LogIn() {
         ></TextField>
 
         <div className="form-footer">
-          <Button>
+          <Button
             className="custom-btn"
             variant="contained"
             color="primary"
             type="submit"
+          >
             Iniciar sesion
           </Button>
 
@@ -140,17 +140,13 @@ export default function LogIn() {
             Olvide mi contraseña
           </Link>
         </div>
-
         <div className="error-message">
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
-
       </div>
-
       <div className="footer">
         <img src="/LogoProtocol.png" alt="logo" height="25" />
       </div>
-      
     </form>
   );
 }

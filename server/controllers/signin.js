@@ -19,8 +19,7 @@ let authenticateUser = async (req, res) => {
 
     const token = jwt.sign(
       { email: existingUser.email, sub: existingUser._id },
-      process.env.SECRET_KEY,
-      { expiresIn: "1d" }
+      process.env.SECRET_KEY
     );
 
     userData = {

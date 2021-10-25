@@ -29,6 +29,7 @@
     flex-direction: column;
     margin: auto;
     margin: 10px 50px;
+    justify-content: center;
 }
 
 .form-footer {
@@ -48,7 +49,7 @@
     vertical-align: middle;
 }
 
-.login-input {
+.signup-input {
     margin: 10px 5px !important;
     padding: 5px 10px;
 }

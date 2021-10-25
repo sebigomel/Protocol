@@ -33,20 +33,20 @@ export default function Singup() {
         <div className="form">
 
             <Typography variant="h5">Crear Cuenta:</Typography>
-            <TextField className='login-input' type='text' label='User' variant="filled" name="user"></TextField>
-            <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
-            <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
-            <TextField className='login-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
-            <TextField className='login-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField>
-            <TextField className='login-input' type='text' label='User' variant="filled" name="user"></TextField>
-            <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
-            <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
-            <TextField className='login-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
-            <TextField className='login-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField><TextField className='login-input' type='text' label='User' variant="filled" name="user"></TextField>
-            <TextField className='login-input' type='email' label='Email' variant="filled" name="email"></TextField>
-            <TextField className='login-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
-            <TextField className='login-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
-            <TextField className='login-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField>
+            <TextField className='signup-input' type='text' label='User' variant="filled" name="user"></TextField>
+            <TextField className='signup-input' type='email' label='Email' variant="filled" name="email"></TextField>
+            <TextField className='signup-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
+            <TextField className='signup-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
+            <TextField className='signup-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField>
+            <TextField className='signup-input' type='text' label='User' variant="filled" name="user"></TextField>
+            <TextField className='signup-input' type='email' label='Email' variant="filled" name="email"></TextField>
+            <TextField className='signup-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
+            <TextField className='signup-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
+            <TextField className='signup-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField><TextField className='login-input' type='text' label='User' variant="filled" name="user"></TextField>
+            <TextField className='signup-input' type='email' label='Email' variant="filled" name="email"></TextField>
+            <TextField className='signup-input' type='password' label='Contraseña' variant="filled" name="password"></TextField>
+            <TextField className='signup-input' type='password' label='Confirmar Contraseña' variant="filled" name="confirmpassword"></TextField>
+            <TextField className='signup-input' type='text' label='Razón/Empresa' variant="filled" name="razon/empresa"></TextField>
         
             <div className="form-footer">
                 <Button className='custom-btn' variant='contained' color='primary' type="submit">Crear cuenta</Button>

@@ -38,8 +38,8 @@ function AppContent(props) {
             <LogIn/>
           </Route>
           <Route path="/home" exact component = {Home} />
-          <Route path="/principal" exact component = {Principal} />
-          <Route path="/singup" exact component={Singup} />
+          <Route path="/signup" exact component={Singup} />
+          <Route path="/" exact component = {Principal} />
         </Switch>
       </div>
   );
