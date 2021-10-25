@@ -6,7 +6,6 @@ const UserSchema = new Schema({
   cardId: Number,
   username: {
     type: String,
-    required: true,
     trim: true,
     unique: true,
   },
@@ -27,10 +26,7 @@ const UserSchema = new Schema({
     immutable: true,
   },
   workspaces: [{ type: Schema.Types.ObjectId, ref: "Workspace" }],
-  password: {
-    type: String,
-    required: true,
-  },
+  password: String,
   passwordCheck: String,
   verified: {
     type: Boolean,
@@ -44,6 +40,7 @@ const UserSchema = new Schema({
   verificationToken: String,
   profileImageUrl: String,
   invitations: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  googleId: String
 });
 
 const User = mongoose.model("User", UserSchema);

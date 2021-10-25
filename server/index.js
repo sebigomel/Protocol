@@ -44,6 +44,6 @@ connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 set("useNewUrlParser", true);
 set("useFindAndModify", false);
 set("useCreateIndex", true);
-set('returnOriginal', false);
+set("returnOriginal", false);
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

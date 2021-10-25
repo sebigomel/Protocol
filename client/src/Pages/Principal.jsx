@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,13 +19,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Principal() {
+  const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
-    if (!window.localStorage.getItem("token")) {
-      window.location.pathname = "/login";
+    if (window.localStorage.getItem("token")) {
+      history.push("/home");
     } 
-  }, []);
+  }, [history]);
 
   return (
     <>

@@ -9,16 +9,22 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import { InputAdornment } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import GoogleButton from "react-google-button";
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   let history = useHistory();
+  let { urlToken } = useParams();
+
+  if(urlToken){
+    window.localStorage.setItem("token", urlToken);
+    history.push('/home');
+  }
 
   useEffect(() => {
     const headers = new Headers();
-    headers.append("Content-Type", "application/json");
     const token = window.localStorage.getItem("token");
     if (token) {
       headers.append("Authorization", `Bearer ${token}`);
@@ -39,7 +45,7 @@ export default function LogIn() {
           history.push("/home");
         }
       });
-  }, []);
+  }, [history]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -94,8 +100,7 @@ export default function LogIn() {
         width="224"
         className="icon"
       />
-
-      <div className="form">
+      <div className="login-form">
         <Typography variant="h5">Iniciar sesion:</Typography>
         <TextField
           className="login-input"
@@ -120,37 +125,40 @@ export default function LogIn() {
                   onMouseEnter={handleMouseDownPassword}
                   size="large"
                 >
-                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
+                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </IconButton>
                 <IconButton />
               </InputAdornment>
             ),
           }}
         ></TextField>
 
-        <div className="form-footer">
-          <Button>
+        <div className="login-form-footer">
+          <Button
             className="custom-btn"
             variant="contained"
             color="primary"
             type="submit"
+          >
             Iniciar sesion
           </Button>
+
+          <GoogleButton
+            type="light" 
+            onClick={() => {window.location.href = 'http://localhost:5000/api/user/auth/google'}}
+          />
 
           <Link to="#" className="forgot-pass">
             Olvide mi contraseña
           </Link>
         </div>
-
         <div className="error-message">
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
-
       </div>
-
       <div className="footer">
         <img src="/LogoProtocol.png" alt="logo" height="25" />
       </div>
-      
     </form>
   );
 }
