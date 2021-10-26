@@ -18,7 +18,8 @@ module.exports = {
     if (token === user.verificationToken) {
       user.verified = true
       user.verificationToken = null
-      res.redirect('http://localhost:3000/login');
+      await user.save();
+      res.redirect('http://localhost:3000/login?justVerified=true');
     }
   },
 

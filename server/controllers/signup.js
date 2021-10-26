@@ -41,14 +41,14 @@ const sendEmail = async (email, subject, url) => {
         html: htmlToSend,
         attachments: [
           {
-            content: fs.createReadStream("views/images/image-1.png"),
+            path: "views/images/image-1.png",
             name: "image-1.png",
-            cid: 'gdfwHY54rhh543gg'
+            cid: 'image1'
           },
           {
-            content: fs.createReadStream("views/images/image-2.png"),
+            path: "views/images/image-2.png",
             name: "image-2.png",
-            cid: 'JBD7gh78iuohl77h'
+            cid: 'image2'
           },
         ],
       });

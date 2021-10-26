@@ -9,18 +9,23 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import { InputAdornment } from "@mui/material";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import GoogleButton from "react-google-button";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   let history = useHistory();
+  let query = useQuery();
   let { urlToken } = useParams();
 
-  if(urlToken){
+  if (urlToken) {
     window.localStorage.setItem("token", urlToken);
-    history.push('/home');
+    history.push("/home");
   }
 
   useEffect(() => {
@@ -144,8 +149,11 @@ export default function LogIn() {
           </Button>
 
           <GoogleButton
-            type="light" 
-            onClick={() => {window.location.href = 'http://localhost:5000/api/user/auth/google'}}
+            type="light"
+            onClick={() => {
+              window.location.href =
+                "http://localhost:5000/api/user/auth/google";
+            }}
           />
 
           <Link to="#" className="forgot-pass">
@@ -153,6 +161,7 @@ export default function LogIn() {
           </Link>
         </div>
         <div className="error-message">
+          {query.get("justVerified") === "true" && <Alert severity="success">You have successfully verificated your email adress</Alert>}
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
       </div>
