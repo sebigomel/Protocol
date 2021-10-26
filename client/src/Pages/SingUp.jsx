@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Input,
 } from "@mui/material/";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -19,6 +20,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import {Cloudinary} from "@cloudinary/url-gen";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +52,16 @@ export default function Singup() {
     "Janssen",
   ];
 
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'protocolzz'
+    }
+  });
+
+  var myCropWidget = window.cloudinary.createUploadWidget({
+    cloudName: 'protocolzz', uploadPreset: 'g3a8fl0y', folder: 'widgetUpload', cropping: true}, 
+    (error, result) => { console.log(error, result) })
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -72,7 +84,7 @@ export default function Singup() {
       }
 
       <div className="form">
-        <Typography fontFamily="Inter" >Crear Cuenta:</Typography>
+        <Typography variant="h4">Crear Cuenta:</Typography>
         <div className="form-fields">
           <TextField
             className="signup-input"
@@ -170,7 +182,11 @@ export default function Singup() {
               )}
             />
             <div className="form-doses">
-              <FormControl component="fieldset" className="doses-child">
+              <FormControl
+                component="fieldset"
+                variant="filled"
+                className="doses-child"
+              >
                 <FormLabel component="legend">Dosis </FormLabel>
                 <RadioGroup
                   aria-label="doses"
@@ -184,6 +200,18 @@ export default function Singup() {
               </FormControl>
             </div>
           </div>
+          <label htmlFor="contained-button-file">
+            <Input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onClick={() => myCropWidget.open()}
+            />
+            <Button variant="contained" component="span">
+              Upload Profile Image
+            </Button>
+          </label>
         </div>
         <div className="form-footer">
           <Button

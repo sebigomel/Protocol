@@ -21,6 +21,13 @@ module.exports = {
     res.redirect(`http://localhost:3000/login/${token}`);
   },
 
+  reportIsolation: async (req, res) => {
+    let user = await User.findById(req.user._id);
+    user.isolated = true;
+    user.isolationTime = Date.now();
+    await user.save()
+  },
+
   update: async (req, res) => {
     const { cardId, email, password, vaccine, doses } = req.body;
     data = {

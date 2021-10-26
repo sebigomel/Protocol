@@ -40,7 +40,9 @@ const UserSchema = new Schema({
   verificationToken: String,
   profileImageUrl: String,
   invitations: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  googleId: String
+  googleId: String,
+  isolated: Boolean,
+  isolationTime: Date
 });
 
 const User = mongoose.model("User", UserSchema);
