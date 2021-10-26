@@ -11,7 +11,16 @@ module.exports = {
     let user = await User.findById(req.user._id).select("-password");
     res.status(200).json(user);
   },
-  verifyEmail: async (req, res) => {},
+
+  verifyEmail: async (req, res) => {
+    let { id, token } = req.params
+    let user = await User.findById(id)
+    if (token === user.verificationToken) {
+      user.verified = true
+      user.verificationToken = null
+      res.redirect('http://localhost:3000/login');
+    }
+  },
 
   googleAuth: async (req, res) => {
     const token = jwt.sign(
@@ -25,7 +34,7 @@ module.exports = {
     let user = await User.findById(req.user._id);
     user.isolated = true;
     user.isolationTime = Date.now();
-    await user.save()
+    await user.save();
   },
 
   update: async (req, res) => {
