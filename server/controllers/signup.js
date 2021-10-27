@@ -69,6 +69,7 @@ let createUser = async (req, res) => {
   const passwordCheck = req.body.passwordCheck;
   const vaccine = req.body.vaccine;
   const doses = req.body.doses;
+  const profileImageUrl = req.body.profileImageUrl;
 
   const existingEmail = await User.findOne({ email: email });
   if (existingEmail) {
@@ -92,6 +93,7 @@ let createUser = async (req, res) => {
     password: passwordHash,
     vaccination: { vaccine: vaccine, doses: doses },
     verificationToken: crypto.randomBytes(32).toString("hex"),
+    profileImageUrl: profileImageUrl
   });
 
   try {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./SingUp.css";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
-import { TextField } from "@mui/material";
+import { TextField, Alert } from "@mui/material";
 import {
   Typography,
   Autocomplete,
@@ -20,7 +20,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import {Cloudinary} from "@cloudinary/url-gen";
+import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,32 +36,77 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Singup() {
+  const history = useHistory();
   const classes = useStyles();
+  const [vaccines, setVaccines] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
-  const [date, setDate] = useState(null);
-  const vaccines = [
-    "Pfizer",
-    "Astrazeneca",
-    "Johnson & Johnson",
-    "Moderna",
-    "Sinopharm",
-    "Abdala",
-    "Convidecia",
-    "Sputnik Light",
-    "CoronaVac",
-    "Sputnik V",
-    "Janssen",
-  ];
+  const [errorMessage, setErrorMessage] = useState("")
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue
+  } = useForm();
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'protocolzz'
+  useEffect(() => {
+    setVaccines([
+      "Pfizer",
+      "Astrazeneca",
+      "Johnson & Johnson",
+      "Moderna",
+      "Sinopharm",
+      "Abdala",
+      "Convidecia",
+      "Sputnik Light",
+      "CoronaVac",
+      "Sputnik V",
+      "Janssen",
+    ]);
+    setValue("vaccine", "Pfizer");
+  }, [setVaccines, setValue]);
+
+
+  var myCropWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: "protocolzz",
+      uploadPreset: "g3a8fl0y",
+      folder: "widgetUpload",
+      cropping: true,
+    },
+    (error, result) => {
+      if(error) {
+        console.error("There was an error while uploading");
+      }
+      else{
+        console.log(result);
+        if(result.event === "upload-added"){
+          setValue("profileImageUrl", result.info.id)
+        }
+      }
     }
-  });
+  );
 
-  var myCropWidget = window.cloudinary.createUploadWidget({
-    cloudName: 'protocolzz', uploadPreset: 'g3a8fl0y', folder: 'widgetUpload', cropping: true}, 
-    (error, result) => { console.log(error, result) })
+  const onSubmit = (data) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const body = JSON.stringify(data);
+    const signUpOptions = {
+      method: "POST",
+      body: body,
+      headers: headers,
+    };
+
+    fetch("http://localhost:5000/api/user/signup", signUpOptions)
+      .then((res) => {
+        if (!res.ok) {
+          res.text().then((text) => setErrorMessage(text));
+        } else history.push('/login?accountCreated=true');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -71,15 +117,18 @@ export default function Singup() {
   };
 
   return (
-    <div className="signup" style={{ overflow: "auto" }}>
+    <form
+      className="signup"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ overflow: "auto" }}
+    >
       {
         <img
           src="/LogoProtocol.png"
           alt="logo"
           height="76"
           width="224"
-          className="icon"
-          className="navtomy"
+          className="icon navtomy"
         />
       }
 
@@ -87,6 +136,7 @@ export default function Singup() {
         <Typography variant="h4">Crear Cuenta:</Typography>
         <div className="form-fields">
           <TextField
+            {...register("firstName", { required: true })}
             className="signup-input"
             type="text"
             label="Nombre"
@@ -95,6 +145,7 @@ export default function Singup() {
           ></TextField>
 
           <TextField
+            {...register("lastName", { required: true })}
             className="signup-input"
             type="text"
             label="Apellido"
@@ -103,6 +154,7 @@ export default function Singup() {
           ></TextField>
 
           <TextField
+            {...register("email", { required: true })}
             className="signup-input"
             type="email"
             label="Email"
@@ -111,11 +163,10 @@ export default function Singup() {
           ></TextField>
 
           <TextField
+            {...register("password", { minLength: 8, required: true })}
             className="signup-input"
-            type="password"
             label="Contraseña"
             variant="filled"
-            name="password"
             InputProps={{
               type: showPassword ? "text" : "password",
               endAdornment: (
@@ -134,11 +185,10 @@ export default function Singup() {
           ></TextField>
 
           <TextField
+            {...register("passwordCheck", { required: true })}
             className="signup-input"
-            type="password"
             label="Confirmar Contraseña"
             variant="filled"
-            name="confirmpassword"
             InputProps={{
               type: showPassword ? "text" : "password",
               endAdornment: (
@@ -157,30 +207,51 @@ export default function Singup() {
           ></TextField>
 
           <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DatePicker
-              className="signup-input"
-              openTo="year"
-              views={["year", "month", "day"]}
-              label="Year, month and date"
-              value={date}
-              onChange={(newValue) => {
-                setDate(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField {...params} helperText={null} variant="filled" />
+            <Controller
+              control={control}
+              name={"birthdate"}
+              render={({ field: { value, onChange } }) => (
+                <DatePicker
+                  className={"signup-input"}
+                  openTo={"year"}
+                  views={["year", "month", "day"]}
+                  label={"Year, month and date"}
+                  value={value}
+                  onChange={(e) => onChange(e.toDate())}
+                  renderInput={(params) => (
+                    <TextField {...params} helperText={null} variant="filled" />
+                  )}
+                />
               )}
             />
           </LocalizationProvider>
           <div className="form-vaccination">
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={vaccines}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Vaccine" variant="filled" />
+            <Controller
+              control={control}
+              name="vaccine"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <Autocomplete
+                  onChange={(event, item) => {
+                    onChange(item);
+                  }}
+                  options={vaccines}
+                  value={value}
+                  disablePortal
+                  id="combo-box-demo"
+                  sx={{ width: 300 }}
+                  getOptionSelected={(option, value) =>
+                    value === undefined ||
+                    value === "" ||
+                    option.id === value.id
+                  }
+                  renderInput={(params) => (
+                    <TextField {...params} label="Vaccine" variant="filled" />
+                  )}
+                />
               )}
             />
+
             <div className="form-doses">
               <FormControl
                 component="fieldset"
@@ -188,15 +259,31 @@ export default function Singup() {
                 className="doses-child"
               >
                 <FormLabel component="legend">Dosis </FormLabel>
-                <RadioGroup
-                  aria-label="doses"
-                  defaultValue="1"
-                  name="radio-buttons-group"
-                  row
-                >
-                  <FormControlLabel value="1" control={<Radio />} label="1" />
-                  <FormControlLabel value="2" control={<Radio />} label="2" />
-                </RadioGroup>
+                <Controller
+                  name="doses"
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <RadioGroup
+                      value={value}
+                      onChange={(e) => onChange(parseInt(e.target.value))}
+                      aria-label="doses"
+                      defaultValue="1"
+                      name="radio-buttons-group"
+                      row
+                    >
+                      <FormControlLabel
+                        value="1"
+                        control={<Radio />}
+                        label="1"
+                      />
+                      <FormControlLabel
+                        value="2"
+                        control={<Radio />}
+                        label="2"
+                      />
+                    </RadioGroup>
+                  )}
+                />
               </FormControl>
             </div>
           </div>
@@ -226,11 +313,12 @@ export default function Singup() {
             Ya tengo una cuenta
           </Link>
         </div>
+        {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
       </div>
 
       <div className="footer">
         <img src="/LogoProtocol.png" alt="logo" height="25" />
       </div>
-    </div>
+    </form>
   );
 }

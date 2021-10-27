@@ -161,6 +161,7 @@ export default function LogIn() {
           </Link>
         </div>
         <div className="error-message">
+          {query.get("accountCreated") === "true" && <Alert severity="info">Please check your email adress to verify your email</Alert>}
           {query.get("justVerified") === "true" && <Alert severity="success">You have successfully verificated your email adress</Alert>}
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
