@@ -25,13 +25,13 @@ export default function Principal() {
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
       history.push("/home");
-    } 
+    }
   }, [history]);
 
   return (
     <>
       <div>
-        <AppBar position="static">
+        <AppBar position="static" >
           <Toolbar>
             <IconButton
               edge="start"

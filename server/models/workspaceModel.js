@@ -8,7 +8,10 @@ const WorkspaceSchema = new Schema({
     employees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     devices: [{ type: Schema.Types.ObjectId, ref: 'Device' }],
     roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
-    records: [{ type: Schema.Types.ObjectId, ref: 'Record' }]
+    records: [{ type: Schema.Types.ObjectId, ref: 'Record' }],
+    requests: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    description: String,
+    pictureUrl: String
 });
 
 const Workspace = mongoose.model("Workspace", WorkspaceSchema);

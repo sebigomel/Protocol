@@ -22,6 +22,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,8 +72,8 @@ export default function Singup() {
     {
       cloudName: "protocolzz",
       uploadPreset: "g3a8fl0y",
-      folder: "widgetUpload",
       cropping: true,
+      public_id: uuidv4()
     },
     (error, result) => {
       if(error) {
@@ -81,7 +82,8 @@ export default function Singup() {
       else{
         console.log(result);
         if(result.event === "upload-added"){
-          setValue("profileImageUrl", result.info.id)
+          console.log(result)
+          setValue("profileImageUrl", result.info.publicId)
         }
       }
     }
@@ -137,27 +139,33 @@ export default function Singup() {
         <div className="form-fields">
           <TextField
             {...register("firstName", { required: true })}
+            error={errors.firstName ? true : false}
+            label={errors.firstName ? "Error" : "Nombre"}
+            helperText= {errors.firstName?.type === 'required' && "El nombre es requerido"}
             className="signup-input"
             type="text"
-            label="Nombre"
             variant="filled"
             name="firstName"
           ></TextField>
 
           <TextField
             {...register("lastName", { required: true })}
+            error={errors.lastName ? true : false}
+            label={errors.lastName ? "Error" : "Apellido"}
+            helperText= {errors.lastName?.type === 'required' && "El apellido es requerido"}
             className="signup-input"
             type="text"
-            label="Apellido"
             variant="filled"
             name="lastName"
           ></TextField>
 
           <TextField
             {...register("email", { required: true })}
+            error={errors.email ? true : false}
+            label={errors.email ? "Error" : "Email"}
+            helperText= {errors.email?.type === 'required' && "El email es requerido"}
             className="signup-input"
             type="email"
-            label="Email"
             variant="filled"
             name="email"
           ></TextField>
@@ -165,7 +173,9 @@ export default function Singup() {
           <TextField
             {...register("password", { minLength: 8, required: true })}
             className="signup-input"
-            label="Contraseña"
+            error={errors.password ? true : false}
+            label={errors.password ? "Error" : "Contraseña"}
+            helperText={errors.password?.type === 'required' && "La contraseña es requerida" }
             variant="filled"
             InputProps={{
               type: showPassword ? "text" : "password",

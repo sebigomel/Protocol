@@ -3,12 +3,17 @@ const User = require("../models/userModel");
 
 module.exports = {
   create: (req, res) => {
+    const { name, description, pictureUrl } = req.body
+    if(!name){
+      name = `${req.user.firstName}'s Workspace ${
+        req.user.workspaces.length + 1
+      }`
+    }
     Workspace.create(
-      {
-        name: `${req.user.firstName}'s Workspace ${
-          req.user.workspaces.length + 1
-        }`,
+      { name: name,
         admins: req.user._id,
+        description: description,
+        pictureUrl: pictureUrl
       },
       function (err, workspace) {
         if (err) return res.status(500).json(err.message);

@@ -1,0 +1,15 @@
+.logoHorizontallyCenter {
+  position: "absolute";
+  left: "50%";
+  top: "50%";
+  transform: "translate(-50%, -50%)";
+}
+
+.logo {
+  margin: "auto";
+  text-align: "center";
+  max-width: "50%";
+  max-height: "70%";
+  height: 30px;
+  width: 50px
+}
