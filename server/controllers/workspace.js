@@ -3,17 +3,18 @@ const User = require("../models/userModel");
 
 module.exports = {
   create: (req, res) => {
-    const { name, description, pictureUrl } = req.body
-    if(!name){
+    const { name, description, pictureUrl } = req.body;
+    if (!name) {
       name = `${req.user.firstName}'s Workspace ${
         req.user.workspaces.length + 1
-      }`
+      }`;
     }
     Workspace.create(
-      { name: name,
+      {
+        name: name,
         admins: req.user._id,
         description: description,
-        pictureUrl: pictureUrl
+        pictureUrl: pictureUrl,
       },
       function (err, workspace) {
         if (err) return res.status(500).json(err.message);
@@ -23,7 +24,12 @@ module.exports = {
           { new: true, useFindAndModify: false },
           function (err, user) {
             if (err) return res.status(500).json(err.message);
-            res.status(201).json(user);
+            User.findById(user._id)
+              .populate("workspaces")
+              .exec(function (err, user) {
+                if (err) return res.status(500).json(err.message);
+                res.status(200).send(user.workspaces);
+              });
           }
         );
       }
@@ -58,7 +64,12 @@ module.exports = {
           if (err) return res.status(500).json(err.message);
           User.findById(req.user._id, function (err, user) {
             if (err) return res.status(500).json(err.message);
-            res.status(200).json(user.workspaces);
+            User.findById(user._id)
+              .populate("workspaces")
+              .exec(function (err, user) {
+                if (err) return res.status(500).json(err.message);
+                res.status(200).send(user.workspaces);
+              });
           });
         }
       );
@@ -68,14 +79,14 @@ module.exports = {
   sendInvite: async (req, res) => {},
 
   update: async (req, res) => {
-    let workspaceId = req.params.id
+    let workspaceId = req.params.id;
     let workspace = await Workspace.findById(workspaceId);
 
-    workspace.name = req.body.name
+    workspace.name = req.body.name;
 
-    workspace.save().then(emp => {
+    workspace.save().then((emp) => {
       res.status(200).send("Your profile has been successfully updated");
       console.log(emp);
-    })
+    });
   },
 };

@@ -18,9 +18,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home(props) {
+  const [workspaces, setWorkspaces] = useState([]);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [userData, setUserData] = useState({});
+
   useEffect(() => {
     const headers = new Headers();
     const token = window.localStorage.getItem("token");
@@ -40,14 +42,23 @@ export default function Home(props) {
       })
       .then((json) => {
         if (json) {
+          console.log(json);
           setUserData(json);
         }
       });
+
+    fetch("http://localhost:5000/api/workspace", userOptions)
+      .then((res) => {
+        if (!res.ok) return;
+        else return res.json();
+      })
+      .then((json) => {
+        if (json) {
+          console.log(json);
+          setWorkspaces(json);
+        }
+      });
   }, []);
-
-  const handleCreate = () => {
-
-  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,16 +68,79 @@ export default function Home(props) {
     setOpen(false);
   };
 
+  const onSubmit = (data) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append(
+      "Authorization",
+      `Bearer ${window.localStorage.getItem("token")}`
+    );
+    const body = JSON.stringify(data);
+    const createWorkspaceOptions = {
+      method: "POST",
+      body: body,
+      headers: headers,
+    };
+
+    fetch("http://localhost:5000/api/workspace", createWorkspaceOptions)
+      .then((res) => {
+        if (!res.ok) {
+          res.text().then((text) => console.log(text));
+        } else return res.json();
+      })
+      .then((json) => {
+        if (json) {
+          setWorkspaces(json);
+          handleClose();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDelete = (id) => {
+    const newWorkspaces = workspaces.filter(
+      (workspace) => workspace._id !== id
+    );
+    setWorkspaces(newWorkspaces);
+    const headers = new Headers();
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      headers.append("Authorization", `Bearer ${token}`);
+    }
+
+    const deleteWorkspaceOptions = {
+      method: "DELETE",
+      headers: headers,
+    };
+
+    fetch(`http://localhost:5000/api/workspace/${id}`, deleteWorkspaceOptions)
+      .then((res) => {
+        if (!res.ok) return;
+        else return res.json();
+      })
+      .then((json) => {
+        if (json) {
+          setWorkspaces(json);
+        }
+      });
+  };
+
   return (
-    <>
+    <div overflow="auto">
       <MenuAppBar
         auth={localStorage.getItem("token") ? "true" : "false"}
         fullName={userData.firstName + " " + userData.lastName}
         profileImage={userData.profileImageUrl}
       />
-      <WorkspaceGrid />
+      <WorkspaceGrid
+        userData={userData}
+        workspaces={workspaces}
+        handleDelete={handleDelete}
+      />
       <Fab
-      onClick={handleClickOpen}
+        onClick={handleClickOpen}
         sx={{
           position: "fixed",
           bottom: (theme) => theme.spacing(2),
@@ -76,7 +150,11 @@ export default function Home(props) {
       >
         <AddIcon />
       </Fab>
-      <RegisterWorkspace open={open} handleClose={handleClose} />
-    </>
+      <RegisterWorkspace
+        open={open}
+        handleClose={handleClose}
+        onSubmit={onSubmit}
+      />
+    </div>
   );
 }

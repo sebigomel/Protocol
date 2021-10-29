@@ -26,6 +26,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
+    "react-use": "^17.3.1",
     "sib-api-v3-sdk": "^8.2.1"
   }
 }
