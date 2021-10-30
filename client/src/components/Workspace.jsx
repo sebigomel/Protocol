@@ -25,7 +25,7 @@ export default function Workspace(props) {
   const classes = useStyles();
   return (
     <Card sx={{ maxWidth: 345, borderRadius: 12 }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => props.handleClick()}>
         <CardMedia>{props.workspaceImage}</CardMedia>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

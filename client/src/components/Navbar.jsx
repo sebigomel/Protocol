@@ -2,7 +2,7 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Tab, Tabs } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage } from "@cloudinary/react";
 import { makeStyles } from "@mui/styles";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +25,13 @@ const useStyles = makeStyles({
 export default function MenuAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -63,7 +70,14 @@ export default function MenuAppBar(props) {
                 alt="Bosch Logo"
               />
             </Grid>
-            <Grid xs={4} item>
+            <Grid xs={10} item>
+              {props.workspace && (
+                <Tabs value={value} onChange={handleChange} centered>
+                  <Tab label="Item One" />
+                  <Tab label="Item Two" />
+                  <Tab label="Item Three" />
+                </Tabs>
+              )}
               <Grid container justify={"center"}></Grid>
             </Grid>
             <Grid item xs={1} />

@@ -7,6 +7,7 @@ import Principal from "./Pages/Principal";
 import Singup from "./Pages/SingUp";
 import makeStyles from "@mui/styles/makeStyles";
 import Home from "./Pages/Home";
+import Workspace from "./Pages/WorkspacePage";
 
 const theme = createTheme({
   typography: {
@@ -39,6 +40,7 @@ function AppContent() {
         <Route path="/login">
           <LogIn />
         </Route>
+        <Route path='/workspace/:id' exact component={Workspace}/>
         <Route path="/home" exact component={Home} />
         <Route path="/signup" exact component={Singup} />
         <Route path="/" exact component={Principal} />

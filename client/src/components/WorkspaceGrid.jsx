@@ -4,6 +4,7 @@ import Workspace from "./Workspace";
 import { makeStyles } from "@mui/styles";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage } from "@cloudinary/react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   containerPadding: {
@@ -13,7 +14,8 @@ const useStyles = makeStyles({
 
 export default function WorkspaceGrid(props) {
   const classes = useStyles();
-  let workspaces = props.workspaces
+  const history = useHistory();
+  let workspaces = props.workspaces;
   let userData = props.userData;
 
   const cld = new Cloudinary({
@@ -45,6 +47,9 @@ export default function WorkspaceGrid(props) {
               }
               name={workspace.name}
               description={workspace.description}
+              handleClick={() => {
+                history.push(`/workspace/${workspace._id}`);
+              }}
               handleDelete={() => props.handleDelete(workspace._id)}
             ></Workspace>
           </Grid>
