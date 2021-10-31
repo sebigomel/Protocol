@@ -13,13 +13,15 @@ module.exports = {
   },
 
   verifyEmail: async (req, res) => {
-    let { id, token } = req.params
-    let user = await User.findById(id)
-    if (token === user.verificationToken) {
-      user.verified = true
-      user.verificationToken = null
-      await user.save();
-      res.redirect('http://localhost:3000/login?justVerified=true');
+    let { id, token } = req.params;
+    let user = await User.findById(id);
+    if (user) {
+      if (token === user.verificationToken) {
+        user.verified = true;
+        user.verificationToken = null;
+        await user.save();
+        res.redirect("http://localhost:3000/login?justVerified=true");
+      }
     }
   },
 

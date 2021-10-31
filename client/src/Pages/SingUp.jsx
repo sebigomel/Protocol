@@ -298,14 +298,7 @@ export default function Singup() {
             </div>
           </div>
           <label htmlFor="contained-button-file">
-            <Input
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-              onClick={() => myCropWidget.open()}
-            />
-            <Button variant="contained" component="span">
+            <Button variant="contained" component="span" onClick={() => myCropWidget.open()}>
               Upload Profile Image
             </Button>
           </label>

@@ -17,6 +17,10 @@ let authenticateUser = async (req, res) => {
     if (!correctPassword)
       return res.status(400).send("User or password are incorrect");
 
+    if (!existingUser.verified){
+      return res.status(400).send("You need to verify your email to use your account");
+    }
+
     const token = jwt.sign(
       { email: existingUser.email, sub: existingUser._id },
       process.env.SECRET_KEY

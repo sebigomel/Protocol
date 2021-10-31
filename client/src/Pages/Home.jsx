@@ -134,11 +134,13 @@ export default function Home(props) {
         fullName={userData.firstName + " " + userData.lastName}
         profileImage={userData.profileImageUrl}
       />
-      <WorkspaceGrid
-        userData={userData}
-        workspaces={workspaces}
-        handleDelete={handleDelete}
-      />
+      {workspaces.length >= 0 && (
+        <WorkspaceGrid
+          userData={userData}
+          workspaces={workspaces}
+          handleDelete={handleDelete}
+        />
+      )}
       <Fab
         onClick={handleClickOpen}
         sx={{
