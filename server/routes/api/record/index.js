@@ -1,4 +1,5 @@
 const RecordCtr = require("../../../controllers/record");
+const passport = require("passport");
 
 module.exports = (app, path) => {
   app.post(path, RecordCtr.create);
