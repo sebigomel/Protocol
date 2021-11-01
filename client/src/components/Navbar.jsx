@@ -63,24 +63,17 @@ export default function MenuAppBar(props) {
       <AppBar position="sticky">
         <Toolbar>
           <Grid justify={"space-between"} container>
-            <Grid xs={1} item>
+            <Grid xs={4} item>
               <img
                 className={classes.logo}
                 src="/LogoProtocol.png"
                 alt="Bosch Logo"
               />
             </Grid>
-            <Grid xs={10} item>
-              {props.workspace && (
-                <Tabs value={value} onChange={handleChange} centered>
-                  <Tab label="Item One" />
-                  <Tab label="Item Two" />
-                  <Tab label="Item Three" />
-                </Tabs>
-              )}
+            <Grid xs={4} item>
               <Grid container justify={"center"}></Grid>
             </Grid>
-            <Grid item xs={1} />
+            <Grid item xs={4} />
           </Grid>
           {props.auth && (
             <div>

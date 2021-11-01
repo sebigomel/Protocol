@@ -5,7 +5,7 @@ const Record = require("../models/recordModel");
 
 module.exports = {
   create: async (req, res) => {
-    const { time, cardId, serialNumber } = req.body;
+    const { cardId, serialNumber } = req.body;
     let accepted = false;
     let foundUser = await User.findOne({ cardId: cardId });
     let device = await Device.findOne({ serialNumber: serialNumber });
@@ -18,7 +18,7 @@ module.exports = {
         }
         Record.create(
           {
-            time: time,
+            time: Date.now(),
             user: user._id,
             device: device._id,
             accepted: accepted,
@@ -31,7 +31,7 @@ module.exports = {
               { new: true, useFindAndModify: false },
               function (err, workspace) {
                 if (err) return res.status(500).json(err.message);
-                res.status(200).send(record.accepted);
+                res.status(200).json({ accepted: record.accepted });
               }
             );
           }
@@ -39,20 +39,18 @@ module.exports = {
       });
   },
   get: (req, res) => {
-    const { workspaceId } = req.params;
+    const workspaceId = req.params.workspaceId;
     User.findById(req.user._id)
       .populate("workspaces")
       .exec(function (err, user) {
         if (err) return res.status(500).json(err.message);
-        const workspace = user.workspaces.find(
-          (workspace) => workspace._id === workspaceId
-        );
+        let workspace = user.workspaces.find((w, index) => w._id == workspaceId);
         if (workspace.admins.includes(user._id)) {
           Workspace.findById(workspace._id)
             .populate("records")
             .exec(function (err, workspace) {
               if (err) return res.status(500).json(err.message);
-              res.status(200).json(workspace.records)
+              res.status(200).json(workspace.records);
             });
         }
       });

@@ -42,7 +42,6 @@ export default function Home(props) {
       })
       .then((json) => {
         if (json) {
-          console.log(json);
           setUserData(json);
         }
       });
@@ -54,7 +53,6 @@ export default function Home(props) {
       })
       .then((json) => {
         if (json) {
-          console.log(json);
           setWorkspaces(json);
         }
       });

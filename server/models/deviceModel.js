@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const DeviceSchema = new Schema({
   serialNumber: { type: String, required: true },
   name: String,
-  workspace: { type: Schema.Types.ObjectId, required: true, ref: "Workspace" },
-  roles: [{ type: Schema.Types.ObjectId, ref: "Role" }],
+  workspace: { type: Schema.Types.ObjectId, required: true, ref: "Workspace" }
 });
 
 const Device = mongoose.model("Device", DeviceSchema);
