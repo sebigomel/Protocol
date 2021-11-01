@@ -6,12 +6,30 @@ import Registers from "../components/Registers";
 import Devices from "../components/Devices";
 import Roles from "../components/Roles";
 
+const useEventSource = (url) => {
+  const [data, updateData] = useState([]);
+
+  useEffect(() => {
+    const source = new EventSource(url);
+
+    source.onmessage = function logEvents(event) {
+      updateData(JSON.parse(event.data));
+    };
+  }, []);
+
+  return data;
+};
+
 export default function WorkspacePage() {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
-  const [records, setRecords] = useState([]);
   const [devices, setDevices] = useState([]);
   const [roles, setRoles] = useState([]);
+  const data = useEventSource("http://localhost:5000/api/records");
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   useEffect(() => {
     const headers = new Headers();
@@ -58,7 +76,7 @@ export default function WorkspacePage() {
         }
       });
 
-      fetch(`http://localhost:5000/api/role/${id}`, userOptions)
+    fetch(`http://localhost:5000/api/role/${id}`, userOptions)
       .then((res) => {
         if (!res.ok) return;
         else return res.json();
@@ -79,7 +97,7 @@ export default function WorkspacePage() {
         profileImage={userData.profileImageUrl}
       />
       <WorkspaceTabs
-        registros={<Registers rows={records} />}
+        registros={<Registers rows={data} />}
         puertas={<Devices devices={devices} />}
         roles={<Roles roles={roles} />}
       />

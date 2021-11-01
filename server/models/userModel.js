@@ -7,7 +7,6 @@ const UserSchema = new Schema({
   username: {
     type: String,
     trim: true,
-    unique: true,
   },
   firstName: {
     type: String,
@@ -41,7 +40,7 @@ const UserSchema = new Schema({
   profileImageUrl: String,
   googleId: String,
   isolated: Boolean,
-  isolationTime: Date
+  isolationTime: Date,
 });
 
 const User = mongoose.model("User", UserSchema);

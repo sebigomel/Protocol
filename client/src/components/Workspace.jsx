@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 const useStyles = makeStyles({
   customCard: {
-    borderRadius: "30%",
+    borderRadius: "40px",
     overflow: "hidden",
   },
   customCardActions: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 export default function Workspace(props) {
   const classes = useStyles();
   return (
-    <Card sx={{ maxWidth: 345, borderRadius: 12 }}>
+    <Card sx={{ maxWidth: 345, borderRadius: 5 }}>
       <CardActionArea onClick={() => props.handleClick()}>
         <CardMedia>{props.workspaceImage}</CardMedia>
         <CardContent>

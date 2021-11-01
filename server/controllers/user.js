@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   getOthersInfo: async (req, res) => {
-    username = req.params.username;
-    let user = await User.findOne({ username: username }).select("-password");
+    id = req.params.id;
+    let user = await User.findById(id).select("-password");
     res.status(200).json(user);
   },
   getMyInfo: async (req, res) => {
