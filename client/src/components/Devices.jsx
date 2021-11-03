@@ -6,11 +6,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Devices(props) {
   return (
     <Box sx={{ margin: "auto" }}>
-      <Typography variant="h4" sx={{ fontFamily: "Montserrat" }}>
+      <Typography variant="h6" sx={{ fontFamily: "Montserrat" }}>
         Agrega mas dispositivos utilizando el codigo QR de la caja
       </Typography>
       <List

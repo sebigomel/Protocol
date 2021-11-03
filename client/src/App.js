@@ -11,14 +11,14 @@ import Workspace from "./Pages/WorkspacePage";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ["Montserrat", "sans-serif"].join(",")
+    fontFamily: ["Montserrat", "sans-serif"].join(","),
   },
   palette: {
     /* cada cosa q tenga como color "primary", va a usar este verde*/
     primary: {
       main: "#2C7B42",
-    }
-  }
+    },
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ function AppContent() {
         <Route path="/login">
           <LogIn />
         </Route>
-        <Route path='/workspace/:id' exact component={Workspace}/>
+        <Route path="/workspace/:workspaceId" exact component={Workspace} />
         <Route path="/home" exact component={Home} />
         <Route path="/signup" exact component={Singup} />
         <Route path="/" exact component={Principal} />

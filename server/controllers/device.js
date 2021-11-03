@@ -30,12 +30,18 @@ module.exports = {
     );
   },
   get: (req, res) => {
-    const workspaceId = req.params.workspaceId
+    const workspaceId = req.params.workspaceId;
     Workspace.findById(workspaceId)
       .populate("devices")
       .exec(function (err, workspace) {
         if (err) return res.status(500).json(err.message);
         res.status(200).json(workspace.devices);
       });
+  },
+
+  getOne: async (req, res) => {
+    const deviceId = req.params.deviceId;
+    const device = await Device.findById(deviceId).select("name");
+    res.status(200).json(device);
   },
 };

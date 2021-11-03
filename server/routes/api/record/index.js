@@ -8,4 +8,5 @@ module.exports = (app, path) => {
     passport.authenticate("jwt", { session: false }),
     RecordCtr.get
   );
+  app.get(path + "/real-time/:workspaceId", RecordCtr.getRealTime);
 };

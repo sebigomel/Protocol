@@ -5,31 +5,56 @@ import WorkspaceTabs from "../components/WorkspaceTabs";
 import Registers from "../components/Registers";
 import Devices from "../components/Devices";
 import Roles from "../components/Roles";
+import { createTheme, darken, lighten } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-const useEventSource = (url) => {
-  const [data, updateData] = useState([]);
+const defaultTheme = createTheme();
+const useStyles = makeStyles(
+  (theme) => {
+    const getBackgroundColor = (color) =>
+      theme.palette.mode === "dark" ? darken(color, 0.6) : lighten(color, 0.6);
 
-  useEffect(() => {
-    const source = new EventSource(url);
+    const getHoverBackgroundColor = (color) =>
+      theme.palette.mode === "dark" ? darken(color, 0.5) : lighten(color, 0.5);
 
-    source.onmessage = function logEvents(event) {
-      updateData(JSON.parse(event.data));
+    return {
+      root: {
+        "& .super-app-theme--Accepted": {
+          backgroundColor: getBackgroundColor(theme.palette.success.main),
+          "&:hover": {
+            backgroundColor: getHoverBackgroundColor(
+              theme.palette.success.main
+            ),
+          },
+        },
+        "& .super-app-theme--Rejected": {
+          backgroundColor: getBackgroundColor(theme.palette.error.main),
+          "&:hover": {
+            backgroundColor: getHoverBackgroundColor(theme.palette.error.main),
+          },
+        },
+      },
     };
-  }, []);
-
-  return data;
-};
+  },
+  { defaultTheme }
+);
 
 export default function WorkspacePage() {
-  const { id } = useParams();
+  const classes = useStyles();
+  const { workspaceId } = useParams();
   const [userData, setUserData] = useState({});
   const [devices, setDevices] = useState([]);
   const [roles, setRoles] = useState([]);
-  const data = useEventSource("http://localhost:5000/api/records");
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    const eventSource = new EventSource(
+      `http://localhost:5000/api/record/real-time/${workspaceId}`
+    );
+    eventSource.onmessage = (e) => {
+      setRecords(JSON.parse(e.data));
+    };
+  }, [workspaceId]);
 
   useEffect(() => {
     const headers = new Headers();
@@ -54,18 +79,7 @@ export default function WorkspacePage() {
         }
       });
 
-    fetch(`http://localhost:5000/api/record/${id}`, userOptions)
-      .then((res) => {
-        if (!res.ok) return;
-        else return res.json();
-      })
-      .then((json) => {
-        if (json) {
-          setRecords(json);
-        }
-      });
-
-    fetch(`http://localhost:5000/api/device/${id}`, userOptions)
+    fetch(`http://localhost:5000/api/device/${workspaceId}`, userOptions)
       .then((res) => {
         if (!res.ok) return;
         else return res.json();
@@ -76,7 +90,7 @@ export default function WorkspacePage() {
         }
       });
 
-    fetch(`http://localhost:5000/api/role/${id}`, userOptions)
+    fetch(`http://localhost:5000/api/role/${workspaceId}`, userOptions)
       .then((res) => {
         if (!res.ok) return;
         else return res.json();
@@ -86,10 +100,10 @@ export default function WorkspacePage() {
           setRoles(json);
         }
       });
-  }, []);
+  }, [workspaceId]);
 
   return (
-    <div overflow="auto">
+    <div overflow="auto" className={classes.root}>
       <MenuAppBar
         workspace="true"
         auth={localStorage.getItem("token") ? "true" : "false"}
@@ -97,7 +111,7 @@ export default function WorkspacePage() {
         profileImage={userData.profileImageUrl}
       />
       <WorkspaceTabs
-        registros={<Registers rows={data} />}
+        registros={<Registers records={records} />}
         puertas={<Devices devices={devices} />}
         roles={<Roles roles={roles} />}
       />

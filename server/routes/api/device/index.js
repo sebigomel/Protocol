@@ -12,4 +12,9 @@ module.exports = (app, path) => {
     passport.authenticate("jwt", { session: false }),
     DeviceCtr.get
   );
+  app.get(
+    path + "/one/:deviceId",
+    passport.authenticate("jwt", { session: false }),
+    DeviceCtr.getOne
+  );
 };
