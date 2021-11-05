@@ -89,8 +89,14 @@ module.exports = {
       res.write("data: " + JSON.stringify(data));
       res.write("\n\n");
     };
-    setInterval(() => {
+    const interValID = setInterval(() => {
       updateWorkspace(workspaceId, callback);
     }, 2000);
+
+    res.on("close", () => {
+      console.log("client dropped me");
+      clearInterval(interValID);
+      res.end();
+    });
   },
 };

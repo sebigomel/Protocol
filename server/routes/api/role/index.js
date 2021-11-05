@@ -8,7 +8,7 @@ module.exports = (app, path) => {
     RoleCtr.get
   );
   app.post(
-    path,
+    path + "/:workspaceId",
     passport.authenticate("jwt", { session: false }),
     RoleCtr.create
   );

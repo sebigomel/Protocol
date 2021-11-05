@@ -4,11 +4,12 @@ const User = require("../models/userModel");
 
 module.exports = {
   create: (req, res) => {
-    const { name, workspace, devices } = req.body;
+    const workspaceId = req.params.workspaceId;
+    const { name, devices } = req.body;
     Role.create(
       {
         name: name,
-        workspace: workspace,
+        workspace: workspaceId,
         devices: devices,
       },
       function (err, role) {

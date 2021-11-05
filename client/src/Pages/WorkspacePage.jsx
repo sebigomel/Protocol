@@ -44,7 +44,6 @@ export default function WorkspacePage() {
   const { workspaceId } = useParams();
   const [userData, setUserData] = useState({});
   const [devices, setDevices] = useState([]);
-  const [roles, setRoles] = useState([]);
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
@@ -89,17 +88,6 @@ export default function WorkspacePage() {
           setDevices(json);
         }
       });
-
-    fetch(`http://localhost:5000/api/role/${workspaceId}`, userOptions)
-      .then((res) => {
-        if (!res.ok) return;
-        else return res.json();
-      })
-      .then((json) => {
-        if (json) {
-          setRoles(json);
-        }
-      });
   }, [workspaceId]);
 
   return (
@@ -113,7 +101,7 @@ export default function WorkspacePage() {
       <WorkspaceTabs
         registros={<Registers records={records} />}
         puertas={<Devices devices={devices} />}
-        roles={<Roles roles={roles} />}
+        roles={<Roles workspaceId={workspaceId} devices={devices} />}
       />
     </div>
   );
