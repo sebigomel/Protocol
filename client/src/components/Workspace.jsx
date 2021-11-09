@@ -16,8 +16,8 @@ const useStyles = makeStyles({
   },
   customCardActions: {
     justifyContent: "space-between",
-    marginRight: '5px',
-    marginLeft: '5px',
+    marginRight: "5px",
+    marginLeft: "5px",
   },
 });
 
@@ -36,20 +36,22 @@ export default function Workspace(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      {props.admin === true
-        ? "true"
-        : "false" && (
-            <CardActions className={classes.customCardActions}>
-              <Button size="small" color="inherit">
-                Invite
-              </Button>
-              <Tooltip title="Delete">
-                <IconButton onClick={() => props.handleDelete()}>
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            </CardActions>
-          )}
+      {props.admin && (
+        <CardActions className={classes.customCardActions}>
+          <Button
+            size="small"
+            color="inherit"
+            onClick={() => props.handleInvite()}
+          >
+            Invite
+          </Button>
+          <Tooltip title="Delete">
+            <IconButton onClick={() => props.handleDelete()}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </CardActions>
+      )}
     </Card>
   );
 }

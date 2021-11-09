@@ -31,6 +31,24 @@ module.exports = {
       }
     );
   },
+  assign: (req, res) => {
+    const { userId, roleId } = req.params;
+    User.findByIdAndUpdate(
+      userId,
+      { $set: { role: roleId } },
+      { returnDocument: "after" },
+      function (err, user) {
+        if (err) return res.status(500).json(err.message);
+        User.findById(user._id)
+          .populate("role")
+          .exec(function (err, user) {
+            if (err) return res.status(500).json(err.message);
+            else return res.status(200).json(user);
+          });
+      }
+    );
+  },
+
   get: (req, res) => {
     const workspaceId = req.params.workspaceId;
     Workspace.findById(workspaceId)

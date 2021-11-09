@@ -22,4 +22,9 @@ module.exports = (app, path) => {
     passport.authenticate("jwt", { session: false }),
     RoleCtr.delete
   );
+  app.get(
+    path + "/assign/:userId/:roleId",
+    passport.authenticate("jwt", { session: false }),
+    RoleCtr.assign
+  );
 };

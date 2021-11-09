@@ -8,6 +8,7 @@ import Singup from "./Pages/SingUp";
 import makeStyles from "@mui/styles/makeStyles";
 import Home from "./Pages/Home";
 import Workspace from "./Pages/WorkspacePage";
+import JoinWorkspace from "./Pages/JoinWorkspace";
 
 const theme = createTheme({
   typography: {
@@ -40,6 +41,11 @@ function AppContent() {
         <Route path="/login">
           <LogIn />
         </Route>
+        <Route
+          path="/joinWorkspace/:workspaceId"
+          exact
+          component={JoinWorkspace}
+        />
         <Route path="/workspace/:workspaceId" exact component={Workspace} />
         <Route path="/home" exact component={Home} />
         <Route path="/signup" exact component={Singup} />

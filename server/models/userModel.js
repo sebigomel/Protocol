@@ -4,10 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   cardId: String,
-  username: {
-    type: String,
-    trim: true,
-  },
+  username: String,
   firstName: {
     type: String,
     required: true,
@@ -41,6 +38,7 @@ const UserSchema = new Schema({
   googleId: String,
   isolated: Boolean,
   isolationTime: Date,
+  waitingCardId: { type: Boolean, default: false },
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -7,6 +7,7 @@ const updateWorkspace = (id, callback) => {
   Workspace.findById(id)
     .populate("records")
     .exec(function (err, workspace) {
+      if (!workspace) return;
       Record.find({ device: { $in: workspace.devices } })
         .populate("user", "firstName lastName email profileImageUrl")
         .populate("device", "name")
@@ -23,7 +24,22 @@ module.exports = {
     let accepted = false;
     const foundUser = await User.findOne({ cardId: cardId });
     const device = await Device.findOne({ serialNumber: serialNumber });
-    console.log(device);
+    if (!foundUser) {
+      User.findOneAndUpdate(
+        {
+          workspaces: { $elemMatch: { $eq: device.workspace } },
+          waitingCardId: true,
+        },
+        { $set: { cardId: cardId } },
+        function (err, user) {
+          if (err) return res.status(500).json(err.message);
+          if (!user)
+            return res.status(404).send("Any user is waiting for a card");
+          if (user) res.sendStatus(200);
+        }
+      );
+      return;
+    }
     User.findById(foundUser._id)
       .populate("role")
       .exec(function (err, user) {
@@ -89,14 +105,9 @@ module.exports = {
       res.write("data: " + JSON.stringify(data));
       res.write("\n\n");
     };
-    const interValID = setInterval(() => {
+
+    setInterval(() => {
       updateWorkspace(workspaceId, callback);
     }, 2000);
-
-    res.on("close", () => {
-      console.log("client dropped me");
-      clearInterval(interValID);
-      res.end();
-    });
   },
 };

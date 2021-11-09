@@ -91,12 +91,12 @@ export default function WorkspacePage() {
   }, [workspaceId]);
 
   return (
-    <div overflow="auto" className={classes.root}>
+    <div className={classes.root}>
       <MenuAppBar
         workspace="true"
         auth={localStorage.getItem("token") ? "true" : "false"}
         fullName={userData.firstName + " " + userData.lastName}
-        profileImage={userData.profileImageUrl}
+        user={userData}
       />
       <WorkspaceTabs
         registros={<Registers records={records} />}

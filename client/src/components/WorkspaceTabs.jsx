@@ -66,22 +66,15 @@ export default function WorkspaceTabs(props) {
           <Tab label="Roles" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-        enableMouseEvents
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          {props.registros}
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          {props.puertas}
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          {props.roles}
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        {props.registros}
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        {props.puertas}
+      </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
+        {props.roles}
+      </TabPanel>
     </>
   );
 }

@@ -2,6 +2,18 @@ const Workspace = require("../models/workspaceModel");
 const User = require("../models/userModel");
 
 module.exports = {
+  getAllUsers: (req, res) => {
+    const { workspaceId } = req.params;
+    Workspace.findById(workspaceId, function (err, workspace) {
+      const allUsers = workspace.employees.concat(workspace.admins);
+      User.find({ _id: { $in: allUsers } })
+        .populate("role")
+        .exec(function (err, users) {
+          res.status(200).json(users);
+        });
+    });
+  },
+
   create: (req, res) => {
     const { name, description, pictureUrl } = req.body;
     if (!name) {
@@ -76,7 +88,24 @@ module.exports = {
     });
   },
 
-  sendInvite: async (req, res) => {},
+  join: async (req, res) => {
+    const { workspaceId } = req.params;
+    Workspace.findByIdAndUpdate(
+      workspaceId,
+      { $push: { employees: req.user._id } },
+      function (err, workspace) {
+        if (err) return res.status(500).json(err.message);
+        User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { workspaces: workspace._id } },
+          function (err, user) {
+            if (err) return res.status(500).json(err.message);
+            res.status(200).json(user);
+          }
+        );
+      }
+    );
+  },
 
   update: async (req, res) => {
     let workspaceId = req.params.id;

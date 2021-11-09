@@ -22,7 +22,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,13 +41,13 @@ export default function Singup() {
   const classes = useStyles();
   const [vaccines, setVaccines] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm();
 
   useEffect(() => {
@@ -67,23 +67,20 @@ export default function Singup() {
     setValue("vaccine", "Pfizer");
   }, [setVaccines, setValue]);
 
-
   var myCropWidget = window.cloudinary.createUploadWidget(
     {
       cloudName: "protocolzz",
       uploadPreset: "g3a8fl0y",
       cropping: true,
-      public_id: uuidv4()
+      public_id: uuidv4(),
     },
     (error, result) => {
-      if(error) {
+      if (error) {
         console.error("There was an error while uploading");
-      }
-      else{
+      } else {
         console.log(result);
-        if(result.event === "upload-added"){
-          console.log(result)
-          setValue("profileImageUrl", result.info.publicId)
+        if (result.event === "success") {
+          setValue("profileImageUrl", result.info.path);
         }
       }
     }
@@ -92,6 +89,7 @@ export default function Singup() {
   const onSubmit = (data) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
+    data.username = data.firstName + data.lastName;
     const body = JSON.stringify(data);
     const signUpOptions = {
       method: "POST",
@@ -103,7 +101,7 @@ export default function Singup() {
       .then((res) => {
         if (!res.ok) {
           res.text().then((text) => setErrorMessage(text));
-        } else history.push('/login?accountCreated=true');
+        } else history.push("/login?accountCreated=true");
       })
       .catch((error) => {
         console.log(error);
@@ -141,7 +139,9 @@ export default function Singup() {
             {...register("firstName", { required: true })}
             error={errors.firstName ? true : false}
             label={errors.firstName ? "Error" : "Nombre"}
-            helperText= {errors.firstName?.type === 'required' && "El nombre es requerido"}
+            helperText={
+              errors.firstName?.type === "required" && "El nombre es requerido"
+            }
             className="signup-input"
             type="text"
             variant="filled"
@@ -152,7 +152,9 @@ export default function Singup() {
             {...register("lastName", { required: true })}
             error={errors.lastName ? true : false}
             label={errors.lastName ? "Error" : "Apellido"}
-            helperText= {errors.lastName?.type === 'required' && "El apellido es requerido"}
+            helperText={
+              errors.lastName?.type === "required" && "El apellido es requerido"
+            }
             className="signup-input"
             type="text"
             variant="filled"
@@ -163,7 +165,9 @@ export default function Singup() {
             {...register("email", { required: true })}
             error={errors.email ? true : false}
             label={errors.email ? "Error" : "Email"}
-            helperText= {errors.email?.type === 'required' && "El email es requerido"}
+            helperText={
+              errors.email?.type === "required" && "El email es requerido"
+            }
             className="signup-input"
             type="email"
             variant="filled"
@@ -175,7 +179,10 @@ export default function Singup() {
             className="signup-input"
             error={errors.password ? true : false}
             label={errors.password ? "Error" : "Contraseña"}
-            helperText={errors.password?.type === 'required' && "La contraseña es requerida" }
+            helperText={
+              errors.password?.type === "required" &&
+              "La contraseña es requerida"
+            }
             variant="filled"
             InputProps={{
               type: showPassword ? "text" : "password",
@@ -298,7 +305,11 @@ export default function Singup() {
             </div>
           </div>
           <label htmlFor="contained-button-file">
-            <Button variant="contained" component="span" onClick={() => myCropWidget.open()}>
+            <Button
+              variant="contained"
+              component="span"
+              onClick={() => myCropWidget.open()}
+            >
               Upload Profile Image
             </Button>
           </label>

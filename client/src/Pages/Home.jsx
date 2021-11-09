@@ -5,6 +5,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
 import RegisterWorkspace from "../components/RegisterWorkspace";
+import { useCopyToClipboard } from "react-use";
 
 const useStyles = makeStyles((theme) => ({
   customFab: {
@@ -20,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Home(props) {
   const [workspaces, setWorkspaces] = useState([]);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
+  const [state, copyToClipboard] = useCopyToClipboard();
 
   useEffect(() => {
     const headers = new Headers();
@@ -97,6 +99,10 @@ export default function Home(props) {
       });
   };
 
+  const handleInvite = (id) => {
+    copyToClipboard(`http://localhost:3000/login?redirectUrl=joinWorkspace/${id}`);
+  };
+
   const handleDelete = (id) => {
     const newWorkspaces = workspaces.filter(
       (workspace) => workspace._id !== id
@@ -129,11 +135,11 @@ export default function Home(props) {
     <div overflow="auto">
       <MenuAppBar
         auth={localStorage.getItem("token") ? "true" : "false"}
-        fullName={userData.firstName + " " + userData.lastName}
-        profileImage={userData.profileImageUrl}
+        user={userData}
       />
       {workspaces.length >= 0 && (
         <WorkspaceGrid
+          handleInvite={handleInvite}
           userData={userData}
           workspaces={workspaces}
           handleDelete={handleDelete}

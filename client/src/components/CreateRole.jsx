@@ -14,6 +14,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useParams } from "react-router-dom";
 import Slide from "@mui/material/Slide";
 import { useForm } from "react-hook-form";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -45,7 +46,7 @@ export default function FormDialog(props) {
 
   useEffect(() => {
     setValue("devices", checked);
-  }, [checked]);
+  }, [checked, reset, setValue]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/device/${workspaceId}`, {
@@ -120,7 +121,9 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="sumbit">Create</Button>
+          <LoadingButton loading={props.loading} type="submit">
+            Create
+          </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>

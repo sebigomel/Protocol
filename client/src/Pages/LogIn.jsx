@@ -22,6 +22,7 @@ export default function LogIn() {
   let history = useHistory();
   let query = useQuery();
   let { urlToken } = useParams();
+  const url = query.get("redirectUrl");
 
   if (urlToken) {
     window.localStorage.setItem("token", urlToken);
@@ -47,7 +48,7 @@ export default function LogIn() {
       })
       .then((token) => {
         if (token) {
-          history.push("/home");
+          history.push(url || "/home");
         }
       });
   }, [history]);
@@ -88,7 +89,7 @@ export default function LogIn() {
           window.localStorage.setItem("token", json.token);
           const parsedJson = [{ ...json }];
           delete parsedJson.token;
-          history.push("/home");
+          history.push(url || "/home");
         }
       })
       .catch((error) => {
@@ -161,8 +162,16 @@ export default function LogIn() {
           </Link>
         </div>
         <div className="error-message">
-          {query.get("accountCreated") === "true" && <Alert severity="info">Please check your email adress to verify your email</Alert>}
-          {query.get("justVerified") === "true" && <Alert severity="success">You have successfully verificated your email adress</Alert>}
+          {query.get("accountCreated") === "true" && (
+            <Alert severity="info">
+              Please check your email adress to verify your email
+            </Alert>
+          )}
+          {query.get("justVerified") === "true" && (
+            <Alert severity="success">
+              You have successfully verificated your email adress
+            </Alert>
+          )}
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
         </div>
       </div>

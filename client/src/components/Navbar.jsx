@@ -8,9 +8,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useHistory } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { AdvancedImage } from "@cloudinary/react";
 import { makeStyles } from "@mui/styles";
 import { useLocation } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 
 const useStyles = makeStyles({
   root: {
@@ -28,10 +28,7 @@ export default function MenuAppBar(props) {
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const user = props.user;
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -46,18 +43,7 @@ export default function MenuAppBar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: "protocolzz",
-    },
-  });
-  const myImage = cld
-    .image(
-      `https://res.cloudinary.com/protocolzz/image/upload/w_60,h_60,c_fill,r_max/${props.profileImage}.png`
-    )
-    .setDeliveryType("fetch");
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
@@ -85,7 +71,10 @@ export default function MenuAppBar(props) {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AdvancedImage cldImg={myImage}></AdvancedImage>
+                <Avatar
+                  src={`https://res.cloudinary.com/protocolzz/image/upload/${user.profileImageUrl}`}
+                  alt={user.firstName + " " + user.lastName}
+                />
               </IconButton>
               <Menu
                 id="menu-appbar"

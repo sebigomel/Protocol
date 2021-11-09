@@ -51,6 +51,7 @@ export default function WorkspaceGrid(props) {
                 history.push(`/workspace/${workspace._id}`);
               }}
               handleDelete={() => props.handleDelete(workspace._id)}
+              handleInvite={() => props.handleInvite(workspace._id)}
             ></Workspace>
           </Grid>
         ))}

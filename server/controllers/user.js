@@ -25,6 +25,30 @@ module.exports = {
     }
   },
 
+  waitForCard: (req, res) => {
+    const { userId } = req.params;
+    User.findByIdAndUpdate(
+      userId,
+      { $set: { waitingCardId: true } },
+      function (err, user) {
+        if (err) return res.status(500).json(err.message);
+        res.sendStatus(200);
+      }
+    );
+  },
+
+  stopWaitingForCard: (req, res) => {
+    const { userId } = req.params;
+    User.findByIdAndUpdate(
+      userId,
+      { $set: { waitingCardId: false } },
+      function (err, user) {
+        if (err) return res.status(500).json(err.message);
+        res.sendStatus(200);
+      }
+    );
+  },
+
   googleAuth: async (req, res) => {
     const token = jwt.sign(
       { email: req.user.email, sub: req.user._id },
