@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 
 export default function Workspace(props) {
   const classes = useStyles();
+  console.log(props.admin);
   return (
     <Card sx={{ maxWidth: 345, borderRadius: 5 }}>
       <CardActionArea onClick={() => props.handleClick()}>
@@ -36,22 +37,24 @@ export default function Workspace(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      {props.admin && (
-        <CardActions className={classes.customCardActions}>
-          <Button
-            size="small"
-            color="inherit"
-            onClick={() => props.handleInvite()}
-          >
-            Invite
-          </Button>
-          <Tooltip title="Delete">
-            <IconButton onClick={() => props.handleDelete()}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </CardActions>
-      )}
+      {props.admin
+        ? ""
+        : "true"(
+            <CardActions className={classes.customCardActions}>
+              <Button
+                size="small"
+                color="inherit"
+                onClick={() => props.handleInvite()}
+              >
+                Invite
+              </Button>
+              <Tooltip title="Delete">
+                <IconButton onClick={() => props.handleDelete()}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </CardActions>
+          )}
     </Card>
   );
 }
