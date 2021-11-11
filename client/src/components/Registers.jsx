@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Avatar from "@mui/material/Avatar";
-import { Cloudinary } from "@cloudinary/url-gen";
 import CheckIcon from "@mui/icons-material/Check";
 import { Chip } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
+import { format } from "date-fns";
 
 export default function Registers(props) {
   const records = props.records;
   let rows = [];
 
   records.forEach((record) => {
+    const date = format(new Date(record.time), "Pp");
     let row = {
       id: record._id,
       profilePic: record.user.profileImageUrl,
       fullName: record.user.firstName + " " + record.user.lastName,
       name: record.device.name,
-      time: record.time,
+      time: date,
       status: record.accepted ? "Accepted" : "Rejected",
     };
     rows.push(row);
@@ -26,14 +27,14 @@ export default function Registers(props) {
     {
       field: "time",
       headerName: "Hora",
-      width: 150,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "profilePic",
       headerName: "Foto",
-      width: 150,
+      width: 100,
       renderCell: (cellValues) => {
         return (
           <Avatar
@@ -47,21 +48,21 @@ export default function Registers(props) {
     {
       field: "fullName",
       headerName: "Nombre",
-      width: 150,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "name",
       headerName: "Puerta",
-      width: 150,
+      width: 250,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "status",
       headerName: "Estado",
-      width: 170,
+      width: 250,
       align: "center",
       headerAlign: "center",
       renderCell: (cellValues) => {
@@ -86,6 +87,10 @@ export default function Registers(props) {
 
   return (
     <DataGrid
+      loading={props.loading}
+      density="comfortable"
+      disableColumnMenu
+      disableSelectionOnClick
       rows={rows}
       columns={columns}
       getRowClassName={(params) =>

@@ -13,10 +13,15 @@ const useStyles = makeStyles({
 });
 
 export default function WorkspaceGrid(props) {
+  const [admin, setAdmin] = useState();
   const classes = useStyles();
   const history = useHistory();
   let workspaces = props.workspaces;
   let userData = props.userData;
+
+  const handleClick = (id) => {
+    history.push(`/workspace/${id}`);
+  }
 
   const cld = new Cloudinary({
     cloud: {
@@ -28,6 +33,7 @@ export default function WorkspaceGrid(props) {
     <Container className={classes.containerPadding}>
       <Grid container spacing={3}>
         {workspaces.map((workspace) => {
+          if (!workspace.admins.includes(userData._id)) setAdmin(false);
           return (
             <Grid item key={workspace._id} xs={12} sm={6} lg={4}>
               <Workspace
@@ -41,16 +47,10 @@ export default function WorkspaceGrid(props) {
                       .setDeliveryType("fetch")}
                   ></AdvancedImage>
                 }
-                admin={
-                  workspace.admins && workspace.admins.includes(userData._id)
-                    ? "true"
-                    : "false"
-                }
+                admin={admin}
                 name={workspace.name}
                 description={workspace.description}
-                handleClick={() => {
-                  history.push(`/workspace/${workspace._id}`);
-                }}
+                handleClick={() => handleClick(workspace._id)}
                 handleDelete={() => props.handleDelete(workspace._id)}
                 handleInvite={() => props.handleInvite(workspace._id)}
               ></Workspace>

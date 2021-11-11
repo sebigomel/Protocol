@@ -44,6 +44,7 @@ export default function WorkspacePage() {
   const { workspaceId } = useParams();
   const [userData, setUserData] = useState({});
   const [devices, setDevices] = useState([]);
+  const [loadingRegisters, setLoadingRegisters] = useState(true);
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ export default function WorkspacePage() {
     );
     eventSource.onmessage = (e) => {
       setRecords(JSON.parse(e.data));
+      setLoadingRegisters(false);
     };
   }, [workspaceId]);
 
@@ -99,7 +101,7 @@ export default function WorkspacePage() {
         user={userData}
       />
       <WorkspaceTabs
-        registros={<Registers records={records} />}
+        registros={<Registers records={records} loading={loadingRegisters} />}
         puertas={<Devices devices={devices} />}
         roles={<Roles workspaceId={workspaceId} devices={devices} />}
       />

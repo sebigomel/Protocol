@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
 import RegisterWorkspace from "../components/RegisterWorkspace";
 import { useCopyToClipboard } from "react-use";
+import { Snackbar, Alert } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   customFab: {
@@ -22,6 +23,7 @@ export default function Home(props) {
   const [workspaces, setWorkspaces] = useState([]);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [userData, setUserData] = useState({});
   const [state, copyToClipboard] = useCopyToClipboard();
 
@@ -59,6 +61,10 @@ export default function Home(props) {
         }
       });
   }, []);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -100,10 +106,14 @@ export default function Home(props) {
   };
 
   const handleInvite = (id) => {
-    copyToClipboard(`http://localhost:3000/login?redirectUrl=joinWorkspace/${id}`);
+    copyToClipboard(
+      `http://localhost:3000/login?redirectUrl=joinWorkspace/${id}`
+    );
+    setOpenSnackbar(true);
+    console.log("open snackbar");
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id) => () => {
     const newWorkspaces = workspaces.filter(
       (workspace) => workspace._id !== id
     );
@@ -161,6 +171,19 @@ export default function Home(props) {
         handleClose={handleClose}
         onSubmit={onSubmit}
       />
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Se ha copiado la url de invitacion al portapapeles
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
