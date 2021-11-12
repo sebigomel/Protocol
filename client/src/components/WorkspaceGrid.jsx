@@ -33,7 +33,7 @@ export default function WorkspaceGrid(props) {
     <Container className={classes.containerPadding}>
       <Grid container spacing={3}>
         {workspaces.map((workspace) => {
-          if (!workspace.admins.includes(userData._id)) setAdmin(false);
+          const isAdmin = !workspace.admins.includes(userData._id)
           return (
             <Grid item key={workspace._id} xs={12} sm={6} lg={4}>
               <Workspace
@@ -47,7 +47,7 @@ export default function WorkspaceGrid(props) {
                       .setDeliveryType("fetch")}
                   ></AdvancedImage>
                 }
-                admin={admin}
+                admin={isAdmin}
                 name={workspace.name}
                 description={workspace.description}
                 handleClick={() => handleClick(workspace._id)}

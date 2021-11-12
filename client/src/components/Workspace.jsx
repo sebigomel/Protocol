@@ -37,7 +37,7 @@ export default function Workspace(props) {
         </CardContent>
       </CardActionArea>
       {props.admin ? (
-        ""
+        <></>
       ) : (
         <CardActions className={classes.customCardActions}>
           <Button

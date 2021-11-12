@@ -33,7 +33,7 @@ export default function MenuAppBar(props) {
   const handleSignOut = (e) => {
     e.preventDefault();
     localStorage.clear();
-    history.push("/");
+    history.push("/login");
   };
 
   const handleMenu = (event) => {

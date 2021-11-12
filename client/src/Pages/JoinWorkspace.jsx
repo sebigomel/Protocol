@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Redirect, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-export default function Devices(props) {
+export default function Devices() {
   const { workspaceId } = useParams();
   useEffect(() => {
     const headers = new Headers();

@@ -8,20 +8,8 @@ import RegisterWorkspace from "../components/RegisterWorkspace";
 import { useCopyToClipboard } from "react-use";
 import { Snackbar, Alert } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-  customFab: {
-    margin: 0,
-    top: "auto",
-    left: 20,
-    bottom: 20,
-    right: "auto",
-    position: "fixed",
-  },
-}));
-
-export default function Home(props) {
+export default function Home() {
   const [workspaces, setWorkspaces] = useState([]);
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [userData, setUserData] = useState({});
@@ -55,10 +43,8 @@ export default function Home(props) {
         if (!res.ok) return;
         else return res.json();
       })
-      .then((json) => {
-        if (json) {
-          setWorkspaces(json);
-        }
+      .then((data) => {
+        setWorkspaces(data);
       });
   }, []);
 
@@ -110,7 +96,6 @@ export default function Home(props) {
       `http://localhost:3000/login?redirectUrl=joinWorkspace/${id}`
     );
     setOpenSnackbar(true);
-    console.log("open snackbar");
   };
 
   const handleDelete = (id) => () => {
